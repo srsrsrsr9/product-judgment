@@ -9,6 +9,7 @@ nextChapter: { num: 5, title: "Know Your Neighborhood", slug: "05-know-your-neig
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import FourPersonasOneProblem from '../../components/animations/FourPersonasOneProblem.jsx';
 
@@ -424,42 +425,55 @@ Use this structure for each persona. One page per person. Print them. Put them o
 ```
 
 <ExerciseCard
-title="Build Your Personas"
-prompt={`PROMPT FOR CLAUDE:
-─────────────────
-I've completed user research interviews and need
+  title="Build Your Personas"
+  inputs={`Domain: [your product space]
+Number of interviews: [how many]
+Key patterns I noticed:
+  [pattern 1]
+  [pattern 2]
+  [pattern 3]
+<span class="r-ex-example">e.g., "Everyone described fragmented info across WhatsApp, photos, and memory"</span>
+Emotional themes: [what feelings came up repeatedly]
+<span class="r-ex-example">e.g., "Fear of forgetting, guilt about not being present, exhaustion"</span>
+Common workarounds: [what they're currently doing]
+Failed solutions: [apps/tools they tried and abandoned]`}
+  prompt={`I've completed user research interviews and need
 help turning my findings into actionable personas
 and Jobs To Be Done. Don't give me demographic
 clipart — give me humans I can design for.
+
 Here's my raw research:
-Domain: [your product space]
-Number of interviews:[how many]
-Key patterns I noticed:
-[pattern]
-[pattern]
-[pattern]
-Emotional themes:
-[what feelings came up repeatedly]
-Common workarounds people described:
-[what they're currently doing]
-Failed solutions they mentioned:[apps/tools they tried and abandoned]
+
+[PASTE YOUR INPUTS HERE]
+
 Please:
-Suggest 3-4 persona archetypes based on these
-patterns — give each a vivid name and a one-line
-archetype (e.g., "The Distance Caregiver")
-For each persona, identify their PRIMARY job to
-be done using the format: "When [situation], help
-me [outcome] so I feel [emotion]"
-Recommend which persona should be the MVP target
-and explain why
-Identify one persona who should be explicitly
-EXCLUDED from MVP and explain what happens if I
-try to build for them anyway
-Write success criteria for the MVP persona that
-I can measure in a beta test
+1. Suggest 3-4 persona archetypes based on these
+   patterns — give each a vivid name and a one-line
+   archetype (e.g., "The Distance Caregiver")
+2. For each persona, identify their PRIMARY job to
+   be done using the format: "When [situation], help
+   me [outcome] so I feel [emotion]"
+3. Recommend which persona should be the MVP target
+   and explain why
+4. Identify one persona who should be explicitly
+   EXCLUDED from MVP and explain what happens if I
+   try to build for them anyway
+5. Write success criteria for the MVP persona that
+   I can measure in a beta test
+
 Make the personas feel like real people I'd
 recognize if I met them. Not like market segments.`}
-note=""
+  outcome={`<ul><li>3-4 vivid persona archetypes grounded in your research</li><li>Jobs To Be Done statements for each persona</li><li>A clear MVP target persona and one explicit exclusion</li><li>Measurable success criteria for your beta test</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Personas built from real research become decision-making tools. When you disagree about a feature, you ask: &quot;Would Sandeep use this at 3 AM in a hospital corridor?&quot; That's a testable question. &quot;Would our users like this?&quot; is not."
+/>
+
+<PMPlaybook
+  chapterNum={4}
+  title="Who Are You Building For?"
+  fillIn="Your research patterns, emotional themes, common workarounds, and failed solutions users mentioned."
+  askAI="Build vivid personas with JTBD statements. Recommend my MVP target and one persona to explicitly exclude."
+  goodOutcome="You have personas that drive design decisions — 'Would Sandeep use this at 3 AM?' becomes a testable question."
+  badOutcome="You build for 'Health-Conscious Harry, age 35, Bangalore' — a demographic mannequin that tells you nothing about what to build."
 />
 
 <ComplexityTax

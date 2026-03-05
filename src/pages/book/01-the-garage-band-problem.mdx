@@ -8,6 +8,7 @@ nextChapter: { num: 2, title: "Finding a Problem Worth Solving", slug: "02-findi
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import RetentionChart from '../../components/RetentionChart.jsx';
 import ConfidenceGap from '../../components/animations/ConfidenceGap.jsx';
@@ -326,8 +327,48 @@ If you *can* fill it out and every answer feels certain and comfortable — be v
 
 <ExerciseCard
   title="Stress-Test Your Idea"
-  prompt={`PROMPT FOR CLAUDE:\n─────────────────\n\nI'm considering building a product. Before I invest time,\nI want you to stress-test my thinking. Be rigorous but\nconstructive — like a senior PM doing a product review,\nnot a critic trying to kill the idea.\n\nHere's what I have so far:\n\n<span class="r-ex-ph">Problem: [describe the problem in 1-2 sentences]\nTarget user: [describe who has this problem — be specific]\nCurrent solution: [how they handle it today, even if poorly]\nMy proposed solution: [what I want to build]\nWhy they'd switch: [my hypothesis for why this is better]</span>\n\nPlease:\n1. Identify the 3 weakest assumptions in my thinking\n2. Suggest 3 questions I should ask real users to\n   validate (or invalidate) each assumption\n3. Name 2-3 existing products that already partially\n   solve this — even indirect competitors\n4. Give me a "kill criteria" — what would I need to\n   learn in user research that should make me abandon\n   or significantly pivot this idea?\n5. Rate my readiness to start building on a scale of\n   1 to 10, where 1 is "do much more research" and\n   10 is "you should have started yesterday"\n\nBe honest. I'd rather hear hard truths now than\ndiscover them after 3 months of building.`}
+  inputs={`Problem: [describe the problem in 1-2 sentences]
+<span class="r-ex-example">e.g., "Indian families managing elderly parents' health remotely lose critical information across WhatsApp threads"</span>
+Target user: [describe who has this problem — be specific]
+<span class="r-ex-example">e.g., "Working professionals aged 25-40 coordinating healthcare for aging parents"</span>
+Current solution: [how they handle it today, even if poorly]
+My proposed solution: [what I want to build]
+Why they'd switch: [my hypothesis for why this is better]`}
+  prompt={`I'm considering building a product. Before I invest time,
+I want you to stress-test my thinking. Be rigorous but
+constructive — like a senior PM doing a product review,
+not a critic trying to kill the idea.
+
+Here's what I have so far:
+
+[PASTE YOUR INPUTS HERE]
+
+Please:
+1. Identify the 3 weakest assumptions in my thinking
+2. Suggest 3 questions I should ask real users to
+   validate (or invalidate) each assumption
+3. Name 2-3 existing products that already partially
+   solve this — even indirect competitors
+4. Give me a "kill criteria" — what would I need to
+   learn in user research that should make me abandon
+   or significantly pivot this idea?
+5. Rate my readiness to start building on a scale of
+   1 to 10, where 1 is "do much more research" and
+   10 is "you should have started yesterday"
+
+Be honest. I'd rather hear hard truths now than
+discover them after 3 months of building.`}
+  outcome={`<ul><li>A clear-eyed assessment of your idea's weakest assumptions</li><li>Specific interview questions to validate with real users</li><li>A readiness score telling you whether to research more or start building</li><li>Kill criteria so you know when to walk away</li></ul>`}
   note="<strong>Why this exercise matters:</strong> Most builders skip straight to &quot;what should I build?&quot; This exercise forces you to articulate <em>why</em> you're building it — and exposes the gaps in your reasoning before you've invested weeks of work. The AI doesn't know your domain. That's a feature, not a bug. It asks the obvious questions that you've stopped asking because you've been living inside the idea too long."
+/>
+
+<PMPlaybook
+  chapterNum={1}
+  title="The Garage Band Problem"
+  fillIn="Your product idea in 2 sentences. Who it's for. What problem it solves. Why you think they'd switch."
+  askAI="Stress-test my assumptions. Find the 3 weakest points. Tell me what to validate before I build."
+  goodOutcome="You discover your riskiest assumptions early, before investing weeks of work. You have specific questions to ask real users."
+  badOutcome="You skip validation and build for 3 months based on assumptions that a 10-minute exercise would have challenged."
 />
 
 <ComplexityTax

@@ -9,6 +9,7 @@ nextChapter: { num: 6, title: "Deciding What to Build", slug: "06-deciding-what-
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import FindingTheGap from '../../components/animations/FindingTheGap.jsx';
 
@@ -497,44 +498,58 @@ One page. Fill it out after your research. Update it monthly — the landscape c
 ```
 
 <ExerciseCard
-title="Map Your Competitive Landscape"
-prompt={`PROMPT FOR CLAUDE:
-─────────────────
-I need help mapping my competitive landscape. I don't
+  title="Map Your Competitive Landscape"
+  inputs={`Domain: [your product space]
+Target persona: [who you're building for]
+<span class="r-ex-example">e.g., "Sandeep — 29-year-old IT professional in Bangalore managing his diabetic father's care"</span>
+Primary job to be done: [the job from Chapter 4]
+What I'm building: [1-2 sentence description]
+Competitors I already know about:
+  [list any you've found, or "none yet"]`}
+  prompt={`I need help mapping my competitive landscape. I don't
 want a generic list of companies — I want a strategic
 analysis that tells me where the gaps are and whether
 they're real.
+
 Here's my product context:
-Domain:[your product space]
-Target persona: [who you're building for]
-Primary job to be done:[the job from Chapter 4]
-What I'm building: [1-2 sentence description]
-Competitors I already know about:
-[list any you've found, or "none yet"]
+
+[PASTE YOUR INPUTS HERE]
+
 Please:
-Identify 3-5 INDIRECT competitors I might not
-have considered — products that partially overlap
-with my user's journey even if they're in a
-different category
-Identify the most likely REAL competition —
-the workarounds and cobbled-together tools my
-user is probably using right now
-For each competitor (direct and indirect), tell
-me: what they do well that I should learn from,
-and where they fail for my specific persona
-Assess the EMPTY ROOM: if nobody is building
-exactly what I'm building, give me 3 possible
-reasons why — and which is most likely
-Search for DEAD competitors in this space and
-hypothesize their cause of death
-Write me a positioning statement using the format:
-"For [persona] who [situation], [product] is
-[category] that[differentiator]. Unlike
-[alternative], we [distinction]. We will NEVER
-[anti-positioning]."
+1. Identify 3-5 INDIRECT competitors I might not
+   have considered — products that partially overlap
+   with my user's journey even if they're in a
+   different category
+2. Identify the most likely REAL competition —
+   the workarounds and cobbled-together tools my
+   user is probably using right now
+3. For each competitor (direct and indirect), tell
+   me: what they do well that I should learn from,
+   and where they fail for my specific persona
+4. Assess the EMPTY ROOM: if nobody is building
+   exactly what I'm building, give me 3 possible
+   reasons why — and which is most likely
+5. Search for DEAD competitors in this space and
+   hypothesize their cause of death
+6. Write me a positioning statement using the format:
+   "For [persona] who [situation], [product] is
+   [category] that [differentiator]. Unlike
+   [alternative], we [distinction]. We will NEVER
+   [anti-positioning]."
+
 Be strategic, not encyclopedic. I need insights
 I can act on, not a list I can Google.`}
-note=""
+  outcome={`<ul><li>Indirect competitors you hadn't considered</li><li>A map of the real competition — the workarounds users cobble together today</li><li>An Empty Room assessment explaining why nobody else has built this</li><li>A positioning statement with a clear "Will NEVER" line</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Your biggest competitor isn't another startup — it's whatever your user is doing right now. Understanding the full competitive landscape, including dead competitors and cobbled workarounds, prevents you from building into a space that's empty for good reasons."
+/>
+
+<PMPlaybook
+  chapterNum={5}
+  title="Know Your Neighborhood"
+  fillIn="Your domain, persona, JTBD, product description, and any competitors you already know."
+  askAI="Map indirect competitors, real competition (workarounds), dead competitors, and write my positioning statement."
+  goodOutcome="You understand why the space is empty (or isn't), learn from dead competitors, and have a positioning statement with a clear 'Will NEVER' line."
+  badOutcome="You build into an empty room without understanding why it's empty — and discover the reason the hard way after launch."
 />
 
 <ComplexityTax

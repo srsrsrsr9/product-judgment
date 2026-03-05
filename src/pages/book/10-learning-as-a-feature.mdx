@@ -9,6 +9,7 @@ nextChapter: null
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheLearningLoop from '../../components/animations/TheLearningLoop.jsx';
 
@@ -762,57 +763,72 @@ The craft is yours. The next product is up to you.
 <QuoteBlock quote="We were just a band that made it very, very big. That's all." attribution="John Lennon" footnote="3" />
 
 <ExerciseCard
-title="Write Your Retrospective"
-prompt={`PROMPT FOR CLAUDE:
-I've just completed a beta (or a major
-product milestone). Help me write a
-structured retrospective that turns
-my experience into reusable learning.
-Here's my context:
-Product: [what I built]
-Beta size:[how many users]
+  title="Write Your Retrospective"
+  inputs={`Product: [what I built]
+Beta size: [how many users]
 Duration: [how long]
 Hypothesis: [what I was testing]
 Results:
-Activation: [%]
-Engagement: [metric]
-Retention: [%]
-Qualitative:[summary of user sentiment]
+  Activation: [%]
+  Engagement: [metric]
+  Retention: [%]
+  Qualitative: [summary of user sentiment]
+<span class="r-ex-example">e.g., "73% activation, avg 3 visits logged/user, 60% week-2 retention, generally positive but onboarding confused 4/15"</span>
 Top 3 pieces of positive feedback:
-[quote or paraphrase]
-[quote or paraphrase]
-[quote or paraphrase]
+  [quote or paraphrase]
+  [quote or paraphrase]
+  [quote or paraphrase]
 Top 3 things that went wrong:
-[what happened]
-[what happened]
-[what happened]
+  [what happened]
+  [what happened]
+  [what happened]`}
+  prompt={`I've just completed a beta (or a major
+product milestone). Help me write a
+structured retrospective that turns
+my experience into reusable learning.
+
+Here's my context:
+
+[PASTE YOUR INPUTS HERE]
+
 Please:
-Classify my results against the PMF
-Decision Framework: green, yellow, or
-red for each metric. What's the overall
-signal?
-Take my feedback and classify it using
-the Feedback Taxonomy (usability, value,
-feature request, edge case, emotional).
-What does the distribution tell me?
-Extract 3-5 insight statements from my
-results. Use the format: "[Users who X]
-experience[Y] because [Z], which means
-[implication]."
-Make the iterate/pivot recommendation.
-If iterate: what are the top 3 things
-to fix? If pivot: what specifically
-should change and what should stay?
-Draft my V2 prioritization: what to fix
-first, what to strengthen second, what
-to add third.
-Identify the ONE insight from this beta
-that I didn't expect — the thing that
-surprised me. Help me articulate why
-it matters.
+1. Classify my results against the PMF
+   Decision Framework: green, yellow, or
+   red for each metric. What's the overall
+   signal?
+2. Take my feedback and classify it using
+   the Feedback Taxonomy (usability, value,
+   feature request, edge case, emotional).
+   What does the distribution tell me?
+3. Extract 3-5 insight statements from my
+   results. Use the format: "[Users who X]
+   experience [Y] because [Z], which means
+   [implication]."
+4. Make the iterate/pivot recommendation.
+   If iterate: what are the top 3 things
+   to fix? If pivot: what specifically
+   should change and what should stay?
+5. Draft my V2 prioritization: what to fix
+   first, what to strengthen second, what
+   to add third.
+6. Identify the ONE insight from this beta
+   that I didn't expect — the thing that
+   surprised me. Help me articulate why
+   it matters.
+
 Be direct. I've spent 8+ weeks on this.
 I need clarity, not comfort.`}
-note="Why this exercise matters: The retrospective is where the meta-learning happens. Not just 'what did we learn about the product' but 'what did we learn about how we learn.' This exercise forces you to convert raw experience into structured insight — which is exactly the skill that separates someone who built one product from someone who can build many."
+  outcome={`<ul><li>A PMF traffic-light assessment for each metric</li><li>Feedback classified by taxonomy with distribution analysis</li><li>Structured insight statements you can act on</li><li>A clear iterate/pivot recommendation with V2 priorities</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> The retrospective is where the meta-learning happens. Not just 'what did we learn about the product' but 'what did we learn about <em>how we learn</em>.' This exercise forces you to convert raw experience into structured insight — which is exactly the skill that separates someone who built one product from someone who can build many."
+/>
+
+<PMPlaybook
+  chapterNum={10}
+  title="Learning as a Feature"
+  fillIn="Your beta results: activation, engagement, retention, qualitative feedback, top wins, and top failures."
+  askAI="Classify results against PMF framework. Categorize feedback. Extract insight statements. Make the iterate/pivot call."
+  goodOutcome="Raw experience becomes structured insight. You know exactly what to fix first, strengthen second, and add third."
+  badOutcome="You react to individual feedback instead of patterns. You build what the loudest user asked for instead of what the data shows."
 />
 
 <ComplexityTax

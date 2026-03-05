@@ -9,6 +9,7 @@ nextChapter: { num: 8, title: "The AI Layer", slug: "08-the-ai-layer" }
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheReworkCascade from '../../components/animations/TheReworkCascade.jsx';
 
@@ -895,24 +896,23 @@ RECORD (after user leaves)
 
 <ExerciseCard
   title="Design Your Design System"
-  prompt={`PROMPT FOR CLAUDE:
-------------------
-
-I need help creating a design system for my MVP.
+  inputs={`Product: [what you're building]
+Primary persona: [from Chapter 4 — include their
+  emotional state when using the product]
+<span class="r-ex-example">e.g., "Sandeep — anxious, time-pressured, in a hospital corridor"</span>
+Primary JTBD: [from Chapter 4]
+Usage context: [where/when do they use this?]
+<span class="r-ex-example">e.g., "Hospital waiting room, home at night, during doctor visits"</span>
+Emotional goal: [how should the product FEEL?]
+<span class="r-ex-example">e.g., "Calm, trustworthy, never overwhelming"</span>`}
+  prompt={`I need help creating a design system for my MVP.
 I want something practical — not a 50-page brand
 guide, but a focused system that makes decisions
 for me.
 
 Here's my context:
 
-Product:[what you're building]
-Primary persona:[from Chapter 4 — include their
-  emotional state when using the product]
-Primary JTBD: [from Chapter 4]
-Usage context:[where/when do they use this? On
-  the couch? In a meeting? In a hospital?]
-Emotional goal:[how should the product FEEL
-  to them?]
+[PASTE YOUR INPUTS HERE]
 
 Please:
 1. Suggest a 2-word design system name that
@@ -939,7 +939,17 @@ Please:
 Every recommendation should be testable in
 a paper prototype. If it requires code to
 evaluate, it's too complex for this stage.`}
-  note="Why this exercise matters: Most builders treat design as a post-development polish step. This exercise forces you to make emotional and visual decisions before you write code — which means every line of code you write will implement a tested decision rather than an untested assumption."
+  outcome={`<ul><li>A named design system with emotional intent (e.g., "Calm Companion")</li><li>A 7-color palette with emotional rationale for each color</li><li>Voice guide and typography choices for your usage context</li><li>Your three critical screens identified with design principles</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Most builders treat design as a post-development polish step. This exercise forces you to make emotional and visual decisions before you write code — which means every line of code you write will implement a tested decision rather than an untested assumption."
+/>
+
+<PMPlaybook
+  chapterNum={7}
+  title="Making It Real on Paper"
+  fillIn="Your product, persona (with emotional state), JTBD, usage context, and emotional goal."
+  askAI="Create a named design system with color palette, typography, voice guide, and critical screen identification."
+  goodOutcome="Every design decision is made once and tested on paper. Code implements tested decisions, not untested assumptions."
+  badOutcome="You skip design, build for 6 weeks, then spend 3 weeks rebuilding when users say 'I don't understand what I'm supposed to do here.'"
 />
 
 <ComplexityTax

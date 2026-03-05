@@ -1,20 +1,56 @@
 ---
 interface Props {
   title: string;
+  inputs: string;
   prompt: string;
+  outcome?: string;
   note?: string;
 }
 
-const { title, prompt, note } = Astro.props;
+const { title, inputs, prompt, outcome, note } = Astro.props;
 ---
 
 <div class="r-ex">
   <div class="r-ex-hd">
-    <span class="r-ex-badge">Interactive</span>
+    <span class="r-ex-badge">Interactive Exercise</span>
     <span class="r-ex-label">{title}</span>
   </div>
+
+  <div class="r-ex-steps">
+    <div class="r-ex-step">
+      <span class="r-ex-step-num">1</span>
+      <span class="r-ex-step-text">Fill in your inputs below</span>
+    </div>
+    <div class="r-ex-step-arrow">&rarr;</div>
+    <div class="r-ex-step">
+      <span class="r-ex-step-num">2</span>
+      <span class="r-ex-step-text">Copy the prompt into any AI assistant</span>
+    </div>
+    <div class="r-ex-step-arrow">&rarr;</div>
+    <div class="r-ex-step">
+      <span class="r-ex-step-num">3</span>
+      <span class="r-ex-step-text">Review &amp; refine the response</span>
+    </div>
+  </div>
+
   <div class="r-ex-body">
-    <div class="r-ex-prompt" set:html={prompt} />
+    <div class="r-ex-section">
+      <div class="r-ex-section-label">Your Inputs</div>
+      <div class="r-ex-inputs" set:html={inputs} />
+    </div>
+
+    <div class="r-ex-section">
+      <div class="r-ex-section-label">Prompt for an AI Assistant</div>
+      <div class="r-ex-prompt" set:html={prompt} />
+    </div>
+
+    {outcome && (
+      <div class="r-ex-section">
+        <div class="r-ex-section-label">What You'll Get</div>
+        <div class="r-ex-outcome" set:html={outcome} />
+      </div>
+    )}
+
     {note && (
       <div class="r-ex-note" set:html={note} />
     )}

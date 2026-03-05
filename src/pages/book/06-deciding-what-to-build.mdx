@@ -9,6 +9,7 @@ nextChapter: { num: 7, title: "Making It Real on Paper", slug: "07-making-it-rea
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheMVPRazor from '../../components/animations/TheMVPRazor.jsx';
 
@@ -475,40 +476,55 @@ If No, when: [ ] V2  [ ] V3  [ ] Never
 ```
 
 <ExerciseCard
-title="Scope Your MVP"
-prompt={`PROMPT FOR CLAUDE:
-I need help scoping my MVP. I have too many ideas
-and I need to cut ruthlessly. Be my scope enforcer
-— the person who says "not now" so I don't have to.
-Here's my context:
-Product:[what you're building]
+  title="Scope Your MVP"
+  inputs={`Product: [what you're building]
 Primary persona: [from Chapter 4]
 Primary JTBD: [from Chapter 4]
 Hypothesis: [from Chapter 2]
+<span class="r-ex-example">e.g., "We believe Sandeep will complete 2+ visit cycles/month using AI-powered visit prep"</span>
 Timebox: [how many weeks]
 Features I'm considering:
-[list all features, even the ones you suspect
-should be cut]
+  [list all features, even the ones you suspect
+   should be cut]`}
+  prompt={`I need help scoping my MVP. I have too many ideas
+and I need to cut ruthlessly. Be my scope enforcer
+— the person who says "not now" so I don't have to.
+
+Here's my context:
+
+[PASTE YOUR INPUTS HERE]
+
 Please:
-Score each feature using RICE and show your
-work — be brutally honest about confidence
-Draw the line: which features go in the MVP
-and which get deferred?
-For each excluded feature, write a one-line
-"eulogy" explaining why it was cut and when
-it might return
-Identify the ONE FLOW — the single end-to-end
-path that tests my hypothesis
-Flag any features I listed that might actually
-be guardrails (things the product should NEVER
-do) rather than features to defer
-Stress-test my timebox: given what's in scope,
-is the timeline realistic? If not, what gets
-cut to make it fit?
+1. Score each feature using RICE and show your
+   work — be brutally honest about confidence
+2. Draw the line: which features go in the MVP
+   and which get deferred?
+3. For each excluded feature, write a one-line
+   "eulogy" explaining why it was cut and when
+   it might return
+4. Identify the ONE FLOW — the single end-to-end
+   path that tests my hypothesis
+5. Flag any features I listed that might actually
+   be guardrails (things the product should NEVER
+   do) rather than features to defer
+6. Stress-test my timebox: given what's in scope,
+   is the timeline realistic? If not, what gets
+   cut to make it fit?
+
 I'd rather ship something small that teaches me
 something real than build something comprehensive
 that never sees a user.`}
-note=""
+  outcome={`<ul><li>RICE-scored feature list with a clear cut line</li><li>The ONE FLOW — a single end-to-end path that tests your hypothesis</li><li>Feature eulogies explaining what was deferred and why</li><li>A reality check on whether your timebox is achievable</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Scope is the hardest discipline in product development. Every feature you include is a feature you must design, build, test, and support. This exercise forces the cut so your MVP tests one hypothesis cleanly instead of testing five hypotheses badly."
+/>
+
+<PMPlaybook
+  chapterNum={6}
+  title="Deciding What to Build"
+  fillIn="Your product, persona, JTBD, hypothesis, timebox, and full feature list."
+  askAI="RICE-score every feature. Draw the cut line. Identify the ONE FLOW. Write eulogies for deferred features."
+  goodOutcome="A ruthlessly scoped MVP that tests one hypothesis cleanly. Features deferred with clear rationale for when they return."
+  badOutcome="A product that does twelve things at a C+ level instead of one thing at an A. Three months of building, zero learning."
 />
 
 <ComplexityTax

@@ -9,6 +9,7 @@ nextChapter: { num: 10, title: "Learning as a Feature", slug: "10-learning-as-a-
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheThreeFirstWeekSignals from '../../components/animations/TheThreeFirstWeekSignals.jsx';
 
@@ -698,49 +699,64 @@ Day 6-7:
 ```
 
 <ExerciseCard
-title="Ship Your Ship-It Plan"
-prompt={`PROMPT FOR CLAUDE:
-I need help creating a concrete beta launch
+  title="Ship Your Ship-It Plan"
+  inputs={`Product: [what you've built]
+Current state: [what's working, what's rough]
+<span class="r-ex-example">e.g., "Core visit flow works. AI summarization is good. Onboarding is clunky. No error states."</span>
+Primary persona: [from Chapter 4]
+Core flow: [the one flow from Chapter 6]
+Beta size: [how many users you're targeting]
+Timeline: [when do you want to launch?]`}
+  prompt={`I need help creating a concrete beta launch
 plan. I've been building for weeks and the
 resistance to shipping is real. Help me get
 past it.
+
 Here's my context:
-Product: [what you've built]
-Current state:[what's working, what's rough]
-Primary persona: [from Chapter 4]
-Core flow:[the one flow from Chapter 6]
-Beta size: [how many users you're targeting]
-Timeline: [when do you want to launch?]
+
+[PASTE YOUR INPUTS HERE]
+
 Please:
-Create a "ship or don't ship" checklist:
-what genuinely must work vs. what can
-be rough? Be ruthless — I need someone
-to tell me that 80% of my concerns
-are fears, not blockers.
-Write my beta invitation message —
-something honest that sets expectations
-without underselling the product.
-Define my three first-week signals:
-what specific metrics and qualitative
-observations should I track?
-List the five things most likely to break
-and write a one-line response plan for
-each.
-Write my end-of-beta interview script:
-5 questions that get me real answers,
-not polite ones.
-Design my PMF decision framework:
-what results mean "continue," "adjust,"
-or "pivot"? Make it specific to my
-product and metrics.
-Give me a pep talk. Seriously. The
-resistance is real and I need someone
-to say "ship the damn thing."
+1. Create a "ship or don't ship" checklist:
+   what genuinely must work vs. what can
+   be rough? Be ruthless — I need someone
+   to tell me that 80% of my concerns
+   are fears, not blockers.
+2. Write my beta invitation message —
+   something honest that sets expectations
+   without underselling the product.
+3. Define my three first-week signals:
+   what specific metrics and qualitative
+   observations should I track?
+4. List the five things most likely to break
+   and write a one-line response plan for
+   each.
+5. Write my end-of-beta interview script:
+   5 questions that get me real answers,
+   not polite ones.
+6. Design my PMF decision framework:
+   what results mean "continue," "adjust,"
+   or "pivot"? Make it specific to my
+   product and metrics.
+7. Give me a pep talk. Seriously. The
+   resistance is real and I need someone
+   to say "ship the damn thing."
+
 Every recommendation should be actionable
 this week. If it requires more than a day
 of preparation, it's not a ship plan —
 it's a delay tactic.`}
-note="Why this exercise matters: The exercise explicitly asks for a pep talk because the emotional barrier to shipping is as real and as difficult as the technical barriers. Most products die not because they can't be built, but because they can't be released. The gap between 'it works on my machine' and 'it works in someone else's life' is the gap that separates builders from shippers. This exercise helps you cross it."
+  outcome={`<ul><li>A ship/don't-ship checklist separating real blockers from fears</li><li>A ready-to-send beta invitation message</li><li>Three first-week signals to track</li><li>A PMF decision framework specific to your product</li><li>A pep talk (because you need one)</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> The exercise explicitly asks for a pep talk because the emotional barrier to shipping is as real as the technical barriers. Most products die not because they can't be built, but because they can't be <em>released</em>. The gap between 'it works on my machine' and 'it works in someone else's life' is the gap that separates builders from shippers."
+/>
+
+<PMPlaybook
+  chapterNum={9}
+  title="Ship It"
+  fillIn="What you've built, current state, persona, core flow, beta size, and timeline."
+  askAI="Create a ship/don't-ship checklist, beta invitation, first-week signals, break-response plans, and a PMF framework."
+  goodOutcome="You ship to 15 real users this week with a clear plan for what to watch, what to ignore, and when to pivot."
+  badOutcome="You polish for 3 more months because the resistance sounds like 'just one more feature' — and the product dies in development."
 />
 
 <ComplexityTax

@@ -10,6 +10,7 @@ nextChapter: { num: 3, title: "Talking to Strangers", slug: "03-talking-to-stran
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import TheProblemSpectrum from '../../components/animations/TheProblemSpectrum.jsx';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 
 There's a particular type of conversation that happens at dinner parties, at coffee shops, during long flights, and — increasingly — in the first ten minutes of someone's interaction with an LLM. It goes like this:
@@ -420,8 +421,50 @@ Fill this out after your initial research. It should take no more than one page.
 
 <ExerciseCard
   title="Pressure-Test Your Problem"
-  prompt={`PROMPT FOR CLAUDE:\n─────────────────\n\nI'm validating whether a problem is worth solving\nbefore I build anything. I need you to be my\nskeptical co-founder — the one who asks the hard\nquestions before we spend months on this.\n\nHere's the problem as I understand it:\n\n<span class="r-ex-ph">Problem: [describe in 1-2 sentences]\nWho has it: [specific person/role]\nHow often it occurs: [daily/weekly/monthly/etc.]\nCurrent workarounds: [what they do today]\nWhy those workarounds fail: [your understanding]\nEvidence I have so far: [interviews done, patterns\n  observed, or "none yet — this is my hypothesis"]</span>\n\nPlease:\n1. Rate this problem on the Problem Spectrum\n   (Hair on Fire → Mild Itch) and explain why\n2. Identify the biggest ASSUMPTION I'm making\n   that hasn't been validated\n3. Give me 5 specific questions to ask in my next\n   interview that would challenge my weakest assumption\n4. Tell me what would make this a "kill" — what\n   evidence should make me walk away?\n5. Suggest one way to REFRAME this problem that\n   might reveal a more painful version of it\n6. If this problem IS real, what's the smallest\n   possible experiment (not product) to test it?\n\nI'd rather abandon a bad idea now than discover\nit's bad after 3 months of building.`}
+  inputs={`Problem: [describe in 1-2 sentences]
+<span class="r-ex-example">e.g., "Families lose track of medications, appointments, and doctor instructions across fragmented tools"</span>
+Who has it: [specific person/role]
+How often it occurs: [daily/weekly/monthly/etc.]
+Current workarounds: [what they do today]
+Why those workarounds fail: [your understanding]
+Evidence I have so far: [interviews done, patterns
+  observed, or "none yet — this is my hypothesis"]`}
+  prompt={`I'm validating whether a problem is worth solving
+before I build anything. I need you to be my
+skeptical co-founder — the one who asks the hard
+questions before we spend months on this.
+
+Here's the problem as I understand it:
+
+[PASTE YOUR INPUTS HERE]
+
+Please:
+1. Rate this problem on the Problem Spectrum
+   (Hair on Fire → Mild Itch) and explain why
+2. Identify the biggest ASSUMPTION I'm making
+   that hasn't been validated
+3. Give me 5 specific questions to ask in my next
+   interview that would challenge my weakest assumption
+4. Tell me what would make this a "kill" — what
+   evidence should make me walk away?
+5. Suggest one way to REFRAME this problem that
+   might reveal a more painful version of it
+6. If this problem IS real, what's the smallest
+   possible experiment (not product) to test it?
+
+I'd rather abandon a bad idea now than discover
+it's bad after 3 months of building.`}
+  outcome={`<ul><li>A Problem Spectrum rating for your idea</li><li>Your biggest unvalidated assumption, called out</li><li>Interview questions that challenge your weakest thinking</li><li>Kill criteria and a reframed version of the problem</li></ul>`}
   note="<strong>Why this exercise matters:</strong> Most builders skip straight to &quot;what should I build?&quot; This exercise forces you to articulate <em>why</em> — and exposes the gaps in your reasoning before you've invested weeks of work."
+/>
+
+<PMPlaybook
+  chapterNum={2}
+  title="Finding a Problem Worth Solving"
+  fillIn="Your problem hypothesis: who has it, how often, what workarounds they use, and what evidence you have."
+  askAI="Rate this on the Problem Spectrum. Find my biggest unvalidated assumption. Give me interview questions and kill criteria."
+  goodOutcome="You discover whether your problem is hair-on-fire or mild-itch before building. You have a clear kill criteria."
+  badOutcome="You build a solution for a problem nobody has — or a problem they've already adapted to and won't switch from."
 />
 
 <ComplexityTax

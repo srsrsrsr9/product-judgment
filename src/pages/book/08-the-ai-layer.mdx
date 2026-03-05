@@ -9,6 +9,7 @@ nextChapter: { num: 9, title: "Ship It", slug: "09-ship-it" }
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheCapabilityTrap from '../../components/animations/TheCapabilityTrap.jsx';
 
@@ -985,23 +986,21 @@ Prompt changes are not code changes. They don't have the same predictable effect
 
 <ExerciseCard
   title="Design Your AI Guardrails"
-  prompt={`PROMPT FOR CLAUDE:
-------------------
-
-I need help designing the AI layer for my
+  inputs={`Product: [what you're building]
+AI's role: [what the AI does in your product]
+<span class="r-ex-example">e.g., "Summarizes doctor visits, extracts follow-up tasks, organizes medication schedules"</span>
+Domain risk: [what goes wrong if the AI is wrong?]
+<span class="r-ex-example">e.g., "Wrong medication reminder → physical harm. Wrong appointment → missed care."</span>
+User sophistication: [can your user evaluate
+  whether the AI's output is correct?]`}
+  prompt={`I need help designing the AI layer for my
 product — specifically, the guardrails and
 boundaries that keep the AI useful without
 letting it cause harm.
 
 Here's my context:
 
-Product: [what you're building]
-AI's role: [what the AI does in your product]
-Domain risk:[what goes wrong if the AI is
-  wrong? Mild inconvenience? Financial loss?
-  Physical harm?]
-User sophistication: [can your user evaluate
-  whether the AI's output is correct?]
+[PASTE YOUR INPUTS HERE]
 
 Please:
 1. Define my "Three Nevers" — the things my
@@ -1037,7 +1036,17 @@ Please:
 
 Every guardrail should be testable. If I can't
 write a test for it, it's a wish, not a guardrail.`}
-  note="Why this exercise matters: Most builders add AI and immediately focus on what the AI can do. This exercise forces you to start with what the AI must never do — because in a production product with real users, the downside of a guardrail failure is always larger than the upside of an expanded capability. It's easier to add capabilities later than to rebuild trust after a violation."
+  outcome={`<ul><li>Your "Three Nevers" — hard boundaries the AI must never cross</li><li>A production-ready system prompt with tone, boundaries, and escape hatches</li><li>15 edge case tests to validate guardrail behavior</li><li>An output validation approach and RAG architecture assessment</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Most builders add AI and immediately focus on what the AI <em>can</em> do. This exercise forces you to start with what the AI must <em>never</em> do — because the downside of a guardrail failure is always larger than the upside of an expanded capability. It's easier to add capabilities later than to rebuild trust after a violation."
+/>
+
+<PMPlaybook
+  chapterNum={8}
+  title="The AI Layer"
+  fillIn="Your product, AI's role, domain risk level, and user sophistication."
+  askAI="Define my Three Nevers, write a system prompt, create an edge case battery, and design output validation."
+  goodOutcome="Your AI has explicit boundaries tested 25 ways. Guardrails are testable, not aspirational. Trust is built by design."
+  badOutcome="Your AI gives medical advice, crosses a boundary once, and you lose all user trust in a domain where trust is everything."
 />
 
 <ComplexityTax

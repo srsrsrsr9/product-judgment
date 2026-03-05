@@ -9,6 +9,7 @@ nextChapter: { num: 4, title: "Who Are You Building For?", slug: "04-who-are-you
 
 import QuoteBlock from '../../components/QuoteBlock.astro';
 import ExerciseCard from '../../components/ExerciseCard.astro';
+import PMPlaybook from '../../components/PMPlaybook.astro';
 import ComplexityTax from '../../components/ComplexityTax.astro';
 import TheIcebergInterview from '../../components/animations/TheIcebergInterview.jsx';
 
@@ -586,16 +587,16 @@ After 8+ interviews, fill this in to crystallize your findings.
 
 <ExerciseCard
   title="Practice Before You Go Live"
-  prompt={`PROMPT FOR CLAUDE:
-─────────────────
-I want to practice a user research interview before
+  inputs={`Product domain: [describe what you're researching]
+<span class="r-ex-example">e.g., "Family health coordination for elderly parents in India"</span>
+Persona to role-play: [describe who — age, role, context, emotional state]
+<span class="r-ex-example">e.g., "29-year-old IT professional in Bangalore, managing his diabetic father's care, stressed and forgetful"</span>`}
+  prompt={`I want to practice a user research interview before
 I conduct real ones. Please role-play as my interview
 subject.
 
-My product domain: [describe what you're researching]
-
-The persona you should play: [describe who — age,
-role, context, emotional state]
+My product domain: [PASTE YOUR DOMAIN]
+The persona you should play: [PASTE YOUR PERSONA]
 
 Rules for you as the interviewee:
 - Don't be a perfect interview subject. Be realistic:
@@ -615,7 +616,17 @@ After the interview, break character and give me feedback:
 - Rate my interview on a 1-10 scale
 
 Let's start. I'll begin with the warm-up.`}
-  note="Why this exercise matters: Interviewing is a motor skill, not a knowledge skill. You can't learn it from reading. You have to do it badly a few times before you do it well. Practicing with an AI first means your real interviewees get a better version of you — one that's already made the obvious mistakes in a safe environment."
+  outcome={`<ul><li>A realistic practice interview that exposes your blind spots</li><li>Feedback on leading questions and missed probing opportunities</li><li>A skill rating so you can track improvement before real interviews</li></ul>`}
+  note="<strong>Why this exercise matters:</strong> Interviewing is a motor skill, not a knowledge skill. You can't learn it from reading. You have to do it badly a few times before you do it well. Practicing with an AI first means your real interviewees get a better version of you — one that's already made the obvious mistakes in a safe environment."
+/>
+
+<PMPlaybook
+  chapterNum={3}
+  title="Talking to Strangers"
+  fillIn="Your product domain and the persona you want to practice interviewing."
+  askAI="Role-play as my interview subject. Be realistic — give vague answers, deflect, say 'it's fine.' Then rate my technique."
+  goodOutcome="You catch your leading questions and missed probes in a safe environment. Real interviewees get a better version of you."
+  badOutcome="Your first real interview is full of leading questions, missed signals, and polite validation that teaches you nothing."
 />
 
 <ComplexityTax

@@ -1,0 +1,41 @@
+---
+interface Props {
+  chapterNum: number;
+  title: string;
+  fillIn: string;
+  askAI: string;
+  goodOutcome: string;
+  badOutcome: string;
+}
+
+const { chapterNum, title, fillIn, askAI, goodOutcome, badOutcome } = Astro.props;
+---
+
+<div class="r-playbook">
+  <div class="r-playbook-hd">
+    <span class="r-playbook-badge">PM Playbook</span>
+    <span class="r-playbook-title">Ch {chapterNum}: {title}</span>
+  </div>
+  <div class="r-playbook-body">
+    <div class="r-playbook-row">
+      <div class="r-playbook-card r-playbook-fill">
+        <div class="r-playbook-card-label">Fill This In</div>
+        <div class="r-playbook-card-content" set:html={fillIn} />
+      </div>
+      <div class="r-playbook-card r-playbook-ask">
+        <div class="r-playbook-card-label">Ask AI</div>
+        <div class="r-playbook-card-content" set:html={askAI} />
+      </div>
+    </div>
+    <div class="r-playbook-row">
+      <div class="r-playbook-card r-playbook-good">
+        <div class="r-playbook-card-label">Good Outcome</div>
+        <div class="r-playbook-card-content" set:html={goodOutcome} />
+      </div>
+      <div class="r-playbook-card r-playbook-bad">
+        <div class="r-playbook-card-label">Bad Outcome</div>
+        <div class="r-playbook-card-content" set:html={badOutcome} />
+      </div>
+    </div>
+  </div>
+</div>
