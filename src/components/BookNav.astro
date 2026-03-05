@@ -1,0 +1,16 @@
+---
+interface Props {
+  activePage?: string;
+}
+
+const { activePage = "book" } = Astro.props;
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href={`${import.meta.env.BASE_URL}book/`} style="font-size: 0.85rem;">Intelligence Is Cheap.<span> Product Judgment Isn't.</span></a>
+    <div class="nav-links">
+      <a class:list={["nav-link", { active: activePage === "book" }]} href={`${import.meta.env.BASE_URL}book/`}>Chapters</a>
+    </div>
+  </div>
+</nav>

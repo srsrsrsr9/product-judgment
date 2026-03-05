@@ -1,0 +1,53 @@
+---
+interface Props {
+  concepts?: string;
+  conceptList?: string[];
+  templates?: string;
+  templateList?: string[];
+  questions?: string;
+  interviews?: string;
+  summary: string;
+}
+
+const { concepts = "0", conceptList = [], templates = "0", templateList = [], questions, interviews, summary } = Astro.props;
+---
+
+<div class="r-widget">
+  <div class="r-w-hd">
+    <span>&#x1F4CA;</span>
+    <span class="r-w-title">Complexity Tax</span>
+  </div>
+  <div class="r-w-row">
+    <span class="r-w-lbl">Concepts introduced</span>
+    <span class="r-w-val">{concepts}</span>
+  </div>
+  {conceptList.length > 0 && conceptList.map((c) => (
+    <div class="r-w-row" style="padding-left: 1rem;">
+      <span class="r-w-lbl" style="font-size: 0.78rem;">- {c}</span>
+      <span class="r-w-val"></span>
+    </div>
+  ))}
+  <div class="r-w-row">
+    <span class="r-w-lbl">Templates provided</span>
+    <span class="r-w-val">{templates}</span>
+  </div>
+  {templateList.length > 0 && templateList.map((t) => (
+    <div class="r-w-row" style="padding-left: 1rem;">
+      <span class="r-w-lbl" style="font-size: 0.78rem;">- {t}</span>
+      <span class="r-w-val"></span>
+    </div>
+  ))}
+  {questions && (
+    <div class="r-w-row">
+      <span class="r-w-lbl">Uncomfortable questions</span>
+      <span class="r-w-val">{questions}</span>
+    </div>
+  )}
+  {interviews && (
+    <div class="r-w-row">
+      <span class="r-w-lbl">Interviews conducted</span>
+      <span class="r-w-val">{interviews}</span>
+    </div>
+  )}
+  <div class="r-w-ft">{summary}</div>
+</div>

@@ -1,0 +1,119 @@
+---
+import { CHAPTERS } from '../data/chapters';
+
+interface Props {
+  currentChapter: number;
+}
+
+const { currentChapter } = Astro.props;
+---
+
+<div class="ch-roadmap">
+  <div class="ch-roadmap-title">The Chapter Roadmap</div>
+  <ol class="ch-roadmap-list">
+    {CHAPTERS.map((ch) => {
+      const isCurrent = ch.num === currentChapter;
+      const isPast = ch.num < currentChapter;
+      return (
+        <li class:list={['ch-roadmap-item', { 'is-current': isCurrent, 'is-past': isPast }]}>
+          {isCurrent ? (
+            <span class="ch-roadmap-link ch-roadmap-current">
+              <span class="ch-roadmap-num">{String(ch.num).padStart(2, '0')}</span>
+              <span class="ch-roadmap-text">{ch.title} <span class="ch-roadmap-marker">&larr; You are here</span></span>
+            </span>
+          ) : (
+            <a class="ch-roadmap-link" href={`${import.meta.env.BASE_URL}book/${ch.slug}/`}>
+              <span class="ch-roadmap-num">{String(ch.num).padStart(2, '0')}</span>
+              <span class="ch-roadmap-text">{ch.title} {isPast && <span class="ch-roadmap-check">&#10003;</span>}</span>
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</div>
+
+<style>
+  .ch-roadmap {
+    margin-top: 4rem;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+  }
+
+  .ch-roadmap-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .ch-roadmap-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ch-roadmap-item {
+    margin: 0;
+  }
+
+  .ch-roadmap-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-dim);
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  a.ch-roadmap-link:hover {
+    background: rgba(194, 142, 44, 0.08);
+    color: var(--accent);
+  }
+
+  .ch-roadmap-current {
+    color: var(--text);
+    font-weight: 600;
+    background: rgba(194, 142, 44, 0.1);
+    border-left: 3px solid var(--accent);
+  }
+
+  .ch-roadmap-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    min-width: 1.5rem;
+  }
+
+  .is-current .ch-roadmap-num {
+    color: var(--accent);
+  }
+
+  .ch-roadmap-marker {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--accent);
+    margin-left: 0.5rem;
+  }
+
+  .ch-roadmap-check {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin-left: 0.25rem;
+  }
+
+  .is-past .ch-roadmap-link {
+    color: var(--text-dim);
+  }
+</style>

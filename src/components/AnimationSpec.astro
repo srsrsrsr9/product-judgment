@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  colors?: { hex: string; label: string }[];
+}
+
+const { title, description, colors = [] } = Astro.props;
+---
+
+<div class="r-anim">
+  <div class="r-anim-label">Animation</div>
+  <div class="r-anim-title">&ldquo;{title}&rdquo;</div>
+  <div class="r-anim-desc" set:html={description} />
+  {colors.length > 0 && (
+    <div class="r-anim-spec">
+      {colors.map((c) => (
+        <div class="r-anim-sw">
+          <div class="r-anim-dot" style={`background: ${c.hex}`} />
+          {c.hex} {c.label}
+        </div>
+      ))}
+    </div>
+  )}
+</div>

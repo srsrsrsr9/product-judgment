@@ -1,0 +1,571 @@
+---
+layout: ../../layouts/ChapterLayout.astro
+title: "Know Your Neighborhood"
+chapterNum: 5
+subtitle: "Who else is playing your song — and what key are they in?"
+prevChapter: { num: 4, title: "Who Are You Building For?", slug: "04-who-are-you-building-for" }
+nextChapter: { num: 6, title: "Deciding What to Build", slug: "06-deciding-what-to-build" }
+---
+
+import QuoteBlock from '../../components/QuoteBlock.astro';
+import ExerciseCard from '../../components/ExerciseCard.astro';
+import ComplexityTax from '../../components/ComplexityTax.astro';
+import FindingTheGap from '../../components/animations/FindingTheGap.jsx';
+
+In 1976, a young Steve Jobs visited Xerox PARC and saw the future: a graphical user interface with windows, icons, and a mouse. Xerox had invented it. They just hadn't understood what they'd built.
+
+Jobs understood. He went back to Apple and built the Macintosh. Xerox, which had the technology first, ended up as a footnote in the story of personal computing. They had the better lab. Apple had the better understanding of *who they were building for* and *what gap existed in the market*.<a class="fn-ref" href="#fn-1">1</a>
+
+The lesson: having the technology is not the same as occupying the gap. And the gap you *think* exists might already be occupied by someone you haven't noticed — or by a competitor so unexpected you'd never think to look for them.
+
+This chapter is about looking.
+
+<QuoteBlock quote="If you know the enemy and know yourself, you need not fear the result of a hundred battles." attribution="Sun Tzu, The Art of War" footnote="2" />
+
+## Your Real Competition
+
+Here is the mistake nearly every builder makes when they think about competitors: they look for products that do what their product does.
+
+This seems logical. It is wrong.
+
+Your competitors are not the products that share your feature list. Your competitors are **whatever your user is doing right now instead of using your product**. And that "whatever" is almost never another app. It's a messy, cobbled-together collection of tools, habits, and workarounds that your user doesn't even think of as a "solution" — it's just how they get through the day.
+
+For the family health app, we mapped three layers of competition:
+
+```text
+THE COMPETITION STACK
+═════════════════════
+
+Layer 1: DIRECT COMPETITORS
+Products explicitly trying to solve the same problem
+for the same user.
+
+→ In our case: almost nobody.
+  AI-powered visit coordination from the caregiver's
+  perspective is a genuinely unoccupied space.
+  This sounds exciting. It's actually terrifying.
+  (More on why in a moment.)
+
+Layer 2: INDIRECT COMPETITORS
+Products solving adjacent problems that partially
+overlap with yours.
+
+→ AI symptom checkers (Ada Health, August AI)
+→ Medical scribes (Freed, Heidi, Sunoh.ai)
+→ Health record apps (Practo, Rx Easy, Apple Health)
+→ Telemedicine platforms (Practo, MFine)
+
+These don't do what we do, but they eat some of
+the same attention, budget, and trust.
+
+Layer 3: THE REAL COMPETITION
+What users actually do today instead of using any product.
+
+→ WhatsApp groups
+→ Phone gallery full of prescription photos
+→ Medication list taped to refrigerator
+→ Physical file folders at home
+→ Calling their brother at 3 AM
+→ Memory and prayer
+
+This is the competition that matters most, because
+this is what you're actually asking people to replace.
+```
+
+Layer 3 is where most competitive analyses fail. Nobody puts "WhatsApp group" on their competitive landscape slide. Nobody lists "prayer" as an alternative solution. But when Sandeep has a doctor appointment tomorrow, he doesn't open an app store and search for "visit preparation tool." He opens WhatsApp, scrolls back through fifty messages, and hopes for the best. That's what you're competing with.
+
+<QuoteBlock quote="The most formidable competitor is the one that doesn't look like a competitor." attribution="adapted from Clayton Christensen" footnote="3" />
+
+
+## The Empty Room Paradox
+
+When you discover that nobody else is building exactly what you're building, the natural reaction is excitement. "We have no competitors! Blue ocean! First mover advantage!"
+
+Resist this reaction. An empty room is more often a warning than an opportunity.
+
+There are three reasons a market space might be empty:
+
+**Reason 1: Nobody thought of it.** This is what you hope. It's also the least likely explanation. There are eight billion people on earth and a startling number of them are building software right now. The chances that your idea is genuinely novel are low.
+
+**Reason 2: People tried and failed.** This is the most common reason, and the most useful one to investigate. If three companies attempted family health coordination apps and all of them died, you need to know why. Was it the technology? The market? The business model? The user acquisition cost? The answer tells you whether you're about to solve a problem they couldn't — or repeat their mistakes with better fonts.
+
+**Reason 3: The problem isn't big enough.** Sometimes a space is empty because the market is too small, the willingness to pay is too low, or the problem isn't painful enough to justify a standalone product. This is the answer you don't want but need to consider.
+
+```text
+THE EMPTY ROOM DIAGNOSTIC
+══════════════════════════
+
+Q: Why is nobody else building this?
+
+□ "Nobody thought of it"
+  → Unlikely. Search harder.
+  → Try: Google "[your problem] app" in multiple languages
+  → Try: Product Hunt, AngelList, Crunchbase for dead startups
+  → Try: App store reviews of adjacent products
+
+□ "People tried and failed"
+  → Most likely. Find the bodies.
+  → Try: Search "[your space] startup failed" or "shutdown"
+  → Try: Wayback Machine for dead product websites
+  → Try: Post-mortems on HackerNews, IndieHackers
+  → KEY QUESTION: Did they fail because of the problem
+    or because of their execution?
+
+□ "The market is too small"
+  → Possible. Run the numbers.
+  → Try: How many people have this problem? (TAM)
+  → Try: How often? (frequency × severity)
+  → Try: Would they pay? What's the evidence?
+
+□ "It's a feature, not a product"
+  → Worth considering. Honestly.
+  → Try: Could this be a feature inside an existing
+    product rather than a standalone app?
+  → Try: Why would someone download a new app for
+    this instead of using what they already have?
+```
+
+For the health app, we found a mix: the direct space was empty because existing players had built for doctors (medical scribes) or for diagnosis (symptom checkers), not for the caregiver's coordination burden. The gap wasn't technological — it was perspectival. Everyone was looking at healthcare from the provider's side of the desk. Nobody was looking at it from the anxious person in the waiting room.
+
+That's a genuine gap. But we only confirmed it by investigating why the room was empty, not by celebrating that it was.
+
+## How to Actually Do Competitive Analysis
+
+Competitive analysis is not a spreadsheet. (It may end up as a spreadsheet, but it doesn't start as one.) It starts with two questions:
+
+### Question 1: What is the user's current journey, and who touches it?
+
+Map the journey first. For the family health app:
+
+```text
+SANDEEP'S CURRENT JOURNEY (NO PRODUCT)
+═══════════════════════════════════════
+
+1. Learn about appointment
+   → Google Calendar reminder
+   → WhatsApp message from parent
+
+2. Prepare for visit
+   → Scroll WhatsApp for old prescriptions
+   → Search phone gallery for reports
+   → Dig through physical files
+   → Try to remember what doctor said last time
+   → Write a list of questions (sometimes)
+
+3. At the doctor
+   → Show phone photos to doctor
+   → Try to remember everything to ask
+   → Listen, nod, forget 40% immediately
+
+4. After the visit
+   → Photograph prescription
+   → Maybe tell siblings in WhatsApp group
+   → Maybe buy medicines
+   → Forget the follow-up appointment
+   → Feel guilty about forgetting
+
+WHO TOUCHES THIS JOURNEY:
+  → Google Calendar (reminder only)
+  → WhatsApp (storage, communication)
+  → Phone camera (capture)
+  → Phone gallery (chaotic storage)
+  → Physical files (backup)
+  → Pharmacy (fulfillment)
+  → Siblings (coordination)
+  → Memory (primary, unreliable)
+```
+
+Every tool in that journey is a potential competitor — not because they're trying to solve health coordination, but because they're already embedded in the workflow. You're not just competing with Practo. You're competing with the WhatsApp group that has been the family's health communication channel for five years.
+
+### Question 2: What does each competitor do well, and where do they fail?
+
+This is where the spreadsheet earns its keep. But it should map capabilities to your user's jobs, not to feature checklists.
+
+| Competitor | Type | What They Do Well | Where They Fail (for our user) |
+| --- | --- | --- | --- |
+| WhatsApp | Real competition | Already where the family communicates; zero onboarding | Terrible at search, retrieval, organization; information drowns in chat |
+| Practo | Indirect | Doctor discovery, appointment booking, some records | Storage-centric, no AI intelligence, no visit prep, unreliable addresses |
+| Ada Health / August AI | Indirect | Symptom analysis, AI-powered | Diagnosis-focused — opposite of what our guardrails allow; for patients, not caregivers |
+| Freed / Heidi / Sunoh.ai | Indirect | Medical transcription, excellent AI | Built for doctors, not patients or caregivers |
+| Apple Health | Indirect | Device integration, record storage | Passive; doesn't help with active coordination, no AI |
+| Phone gallery | Real competition | Already has the photos; zero friction capture | Zero organization, zero intelligence, impossible to search |
+| Physical files | Real competition | Tactile trust — "I can see it, it's real" | Not portable, not shareable, can't bring the filing cabinet to the ER |
+
+<QuoteBlock quote="If you define the market too narrowly, you miss the real threats. If you define it too broadly, everything is a competitor and the analysis is useless." attribution="Ben Thompson" footnote="4" />
+
+## The Positioning Gap
+
+After mapping the landscape, you're looking for one thing: the gap that is both real and yours to fill.
+
+A real gap has three properties:
+
+**Users feel the absence.** It's not a gap you invented — it's a gap users experience as pain. (This is why Chapters 2-4 come before Chapter 5. Without user research, you're looking for gaps in the market. With it, you're looking for gaps in the user's life.)
+
+**No one is filling it well.** Adjacent competitors may partially address it, but their solution is either designed for someone else (doctors instead of caregivers), focused on the wrong part of the journey (storage instead of preparation), or requires behaviors your user has already rejected (extensive data entry).
+
+**You can credibly fill it.** Having a gap isn't enough. You need the skills, technology, and domain understanding to serve it. A gap that requires regulatory approval you can't get, technology you can't build, or trust you can't earn is not your gap — it's someone else's future.
+
+For the health app, the positioning gap was crystallized in a single sentence:
+
+```text
+OUR POSITIONING GAP
+═══════════════════
+
+AI-powered visit coordination
+FROM THE CAREGIVER'S PERSPECTIVE.
+
+Not for doctors → for the anxious person
+                   in the waiting room.
+
+Not for diagnosis → for preparation and
+                    follow-through.
+
+Not for storage → for intelligence that
+                   helps you show up prepared
+                   and leave with a plan.
+
+Nobody is here. We checked.
+And we checked why nobody is here.
+And the answer was "wrong perspective,"
+not "bad market."
+```
+
+<FindingTheGap client:visible />
+
+## What to Steal, What to Avoid
+
+Good competitive analysis doesn't just map the landscape — it extracts actionable lessons. For every competitor you study, ask two questions:
+
+**"What did they get right that I should learn from?"**
+
+Practo's appointment booking flow is excellent. Apple Health's device integration is seamless. Freed's real-time transcription is technically impressive. You don't need to build these things, but you should understand why they work.
+
+**"What did they get wrong — or ignore — that creates my opening?"**
+
+Practo treats health records as static files, not living intelligence. Symptom checkers try to replace the doctor instead of empowering the caregiver. Medical scribes assume the doctor is the user, ignoring the anxious family member sitting in the corner.
+
+```text
+STEAL / AVOID MATRIX
+═════════════════════
+
+STEAL (learn from their wins):
+→ Practo's onboarding simplicity (minimal fields)
+→ WhatsApp's zero-friction photo sharing
+→ Apple Health's passive data collection
+→ Freed's "just start talking" interaction model
+
+AVOID (learn from their failures):
+→ Practo's "form-filling" approach to records
+  (why Sandeep abandoned it)
+→ Health apps that require extensive initial setup
+  (why Alekhya abandoned 5 of them)
+→ AI products that try to be the doctor
+  (trust destruction)
+→ Multi-user features before single-user
+  value is proven (complexity trap)
+```
+
+## The Graveyard Tour (Learning from the Dead)
+
+The most valuable competitive intelligence doesn't come from studying successful products. It comes from studying dead ones.
+
+Every product category has a graveyard — apps that launched with fanfare, gained some users, and quietly disappeared. These products are treasure chests of information, because their founders have already paid the tuition for lessons you need to learn. The least you can do is show up to the funeral and take notes.
+
+Here's how to do a graveyard tour:
+
+**Step 1: Find the bodies.** Search "[your domain] app shutdown," "[your domain] startup failed," check Product Hunt for products that haven't been updated in two years, look at app store reviews that say "this app seems abandoned." For the health space, we found several family health coordination apps that launched between 2018-2023 and are now either dead or undead (technically alive, no updates in 18 months, three-star rating).
+
+**Step 2: Read the post-mortems.** Founders who've failed are often remarkably candid — more candid than founders who've succeeded, because they have nothing left to protect. Look for blog posts, HackerNews threads, IndieHackers discussions, and podcast interviews where they describe what went wrong.
+
+**Step 3: Classify the cause of death.**
+
+```text
+CAUSE OF DEATH CLASSIFICATION
+══════════════════════════════
+
+□ WRONG PROBLEM
+  The problem wasn't painful enough to sustain
+  a product. Users tried it, shrugged, went
+  back to their workarounds.
+  → Lesson: Validate harder. (Chapter 2)
+
+□ WRONG USER
+  They built for a user who either didn't exist
+  or didn't have buying power.
+  → Lesson: Personas matter. (Chapter 4)
+
+□ WRONG BUSINESS MODEL
+  The product worked, users loved it, but there
+  was no sustainable way to pay for it.
+  → Lesson: This is a real risk. Note it.
+
+□ WRONG TIMING
+  Too early (infrastructure didn't exist) or
+  too late (the market consolidated).
+  → Lesson: Timing is luck dressed as strategy.
+
+□ WRONG EXECUTION
+  Right problem, right user, terrible product.
+  Data entry was too heavy. Onboarding was a
+  cliff. The AI hallucinated. The design was
+  built for engineers, not caregivers.
+  → Lesson: This is the one you can actually fix.
+
+□ DEATH BY INDIFFERENCE
+  Nobody marketed it. Nobody found it. It sat
+  in the app store like a book in an empty
+  library.
+  → Lesson: Build it and they will NOT come.
+```
+
+For the health app, the most common cause of death among predecessors was wrong execution — specifically, excessive data entry requirements that burned out users before they received any value. App after app required users to manually input their entire medical history before they could do anything useful. Sandeep has already told us he tried one or two health apps and abandoned them because "data entry was tedious." Those dead apps confirmed the pattern.
+
+The lesson was direct: our onboarding had to deliver value before demanding data. Start with one family member, one upcoming visit. Generate the briefing from a 2-minute conversation, not a 20-minute form. Let the data accumulate through use, not through setup.
+
+<QuoteBlock quote="Experience is the name everyone gives to their mistakes." attribution="Oscar Wilde" footnote="5" />
+
+## Competitive Intelligence on a Budget
+
+You don't need a market research firm. You need curiosity and an internet connection.
+
+**App Store Archaeology.** Read the 1-star and 2-star reviews of your indirect competitors. These are unsolicited user research interviews where people describe — in detail, and often with passion — exactly what doesn't work. A 1-star review of Practo that says "I can never find my old prescriptions when I need them" is worth as much as an interview.
+
+**Product Hunt Forensics.** Search for products in your space. Read the launch comments. Check if the product is still alive. If the website returns a 404, that's a data point.
+
+**The Support Channel Trick.** Sign up for competitor products. Use them as your persona would. Note every moment of friction, confusion, or abandonment. Where do you stop? Where do you get frustrated? Those are the moments your product needs to eliminate.
+
+**The Subreddit Signal.** Find the Reddit communities where your users congregate. Search for your competitors' names. Read the complaints. Read the praise. Read the "is there an alternative to X?" posts — those are your direct invitation to exist.
+
+**LinkedIn Reconnaissance.** Find the founders and key employees of competitors, including dead ones. What are they building now? Did they pivot or abandon the space? If they pivoted, where did they go — and what does that tell you about what they learned?
+
+
+## Positioning: Saying What You Are by Saying What You're Not
+
+After all this analysis, you need to articulate your position. Not a tagline — a strategic statement that tells your team (and eventually your users) exactly where you sit in the landscape.
+
+The best positioning statements work by exclusion. They gain clarity by saying what the product is NOT.
+
+Here's a framework:
+
+```text
+POSITIONING STATEMENT FORMAT
+════════════════════════════
+
+For [target persona]
+who [situation/trigger],
+[product name] is [category]
+that [key differentiator].
+
+Unlike[primary alternative],
+we [critical distinction].
+
+We will NEVER [anti-positioning].
+```
+
+For the health app:
+
+```text
+For primary household care managers
+who coordinate doctor visits for aging parents,
+
+Family Health Chief of Staff is an AI-powered
+visit coordinator that helps you show up prepared
+and leave with a clear action plan.
+
+Unlike health record apps (Practo, Apple Health),
+we don't just store data — we transform it into
+actionable briefings and structured follow-through.
+
+Unlike AI symptom checkers (Ada, August AI),
+we will NEVER diagnose, interpret symptoms, or
+suggest treatments. We are coordination, not care.
+The doctor makes all medical decisions.
+```
+
+The "will NEVER" line is the most important. It does three things simultaneously: it establishes trust (we have guardrails), it differentiates (we're not trying to be the AI doctor), and it constrains scope (nobody on the team can creep toward diagnosis features, because the positioning explicitly forbids it).<a class="fn-ref" href="#fn-6">6</a>
+
+<QuoteBlock quote="Positioning is not what you do to a product. Positioning is what you do to the mind of the prospect." attribution="Al Ries and Jack Trout" footnote="7" />
+
+## When Competitors Launch While You're Building
+
+This will happen. You'll be three weeks into development and someone will post on Product Hunt with something that looks alarmingly similar to what you're building. Your stomach will drop. Your first instinct will be to either panic or pivot.
+
+Don't do either. Do this:
+
+**Step 1: Actually use it.** Download it. Sign up. Go through the full experience as your persona would. Most products that look threatening from the outside reveal significant gaps from the inside.
+
+**Step 2: Check the reviews.** If it's been out for more than a month, the reviews will tell you whether it's working. Look for the same complaints your research surfaced. If users are saying "this is amazing," you have a real competitor. If they're saying "this is interesting but I wish it did X" — and X is what you're building — you have validation.
+
+**Step 3: Map the overlap.** How much of their product overlaps with your planned MVP? Usually less than you think. Products that look identical from a feature list often serve very different jobs because of different design decisions, different personas, different emotional tones.
+
+**Step 4: Decide if it changes anything.** Often it doesn't. Two restaurants can serve pasta in the same neighborhood. What matters is whether your pasta serves your customer in a way that theirs doesn't. Competition validates the market. It doesn't invalidate your product — unless their product is genuinely better at serving your persona's specific job.
+
+```text
+THE "OH NO A COMPETITOR" DECISION TREE
+═══════════════════════════════════════
+
+A competitor launched something similar.
+
+→ Did you USE it?
+  No → Use it first. Then come back.
+  Yes ↓
+
+→ Does it solve your persona's SPECIFIC job?
+  No → It's not your competitor. Breathe.
+  Partially → Note the gaps. Build for the gaps.
+  Yes ↓
+
+→ Does it solve it WELL?
+  No → You have validation AND an opening.
+  Yes ↓
+
+→ Does it solve it well for YOUR persona?
+  No → Different persona = different product.
+  Yes ↓
+
+→ Can you do it meaningfully better?
+  No → Consider pivoting. Seriously.
+  Yes → Build. Move faster. The market is real.
+```
+
+## Template: The Competitive Landscape Canvas
+
+One page. Fill it out after your research. Update it monthly — the landscape changes.
+
+```text
+┌────────────────────────────────────────────────────────────┐
+│  COMPETITIVE LANDSCAPE CANVAS                               │
+│  ════════════════════════════                               │
+│                                                             │
+│  DATE: ________  LAST UPDATED: ________                     │
+│                                                             │
+│  YOUR POSITIONING (1 sentence):                             │
+│  ___________________________________________________________│
+│                                                             │
+│  ── LAYER 1: DIRECT COMPETITORS ──                          │
+│  Name: ____________ Status: □ Active □ Declining □ Dead     │
+│    What they do well: _____________________________________│
+│    Where they fail for our user: __________________________│
+│  Name: ____________ Status: □ Active □ Declining □ Dead     │
+│    What they do well: _____________________________________│
+│    Where they fail for our user: __________________________│
+│                                                             │
+│  ── LAYER 2: INDIRECT COMPETITORS ──                        │
+│  Name: ____________ Category: _____________________________│
+│    Overlap with us: ______________________________________│
+│    Why they're not enough: ________________________________│
+│  Name: ____________ Category: _____________________________│
+│    Overlap with us: ______________________________________│
+│    Why they're not enough: ________________________________│
+│                                                             │
+│  ── LAYER 3: REAL COMPETITION (workarounds) ──              │
+│  Workaround: _________________ Used by __/__ interviewees  │
+│    Why it persists: _______________________________________│
+│    What it costs the user: ________________________________│
+│  Workaround: _________________ Used by __/__ interviewees  │
+│    Why it persists: _______________________________________│
+│    What it costs the user: ________________________________│
+│                                                             │
+│  ── THE GRAVEYARD ──                                        │
+│  Dead competitor: _____________                             │
+│    Cause of death: □ Wrong problem □ Wrong user             │
+│    □ Wrong model □ Wrong timing □ Wrong execution           │
+│    Lesson for us: ________________________________________│
+│                                                             │
+│  ── THE GAP ──                                              │
+│  Our positioning gap (1 sentence):                         │
+│  ___________________________________________________________│
+│  Why it's real (evidence):                                 │
+│  ___________________________________________________________│
+│  Why nobody else is filling it:                            │
+│  ___________________________________________________________│
+│  Why WE can fill it:                                       │
+│  ___________________________________________________________│
+│                                                             │
+│  ── STEAL / AVOID ──                                        │
+│  Steal from ___________: __________________________________│
+│  Steal from ___________: __________________________________│
+│  Avoid from ___________: __________________________________│
+│  Avoid from ___________: __________________________________│
+│                                                             │
+│  CONFIDENCE LEVEL:                                          │
+│  □ High — thorough research, clear gap                     │
+│  □ Medium — some gaps in analysis                          │
+│  □ Low — need more investigation                           │
+│                                                             │
+└────────────────────────────────────────────────────────────┘
+```
+
+<ExerciseCard
+title="Map Your Competitive Landscape"
+prompt={`PROMPT FOR CLAUDE:
+─────────────────
+I need help mapping my competitive landscape. I don't
+want a generic list of companies — I want a strategic
+analysis that tells me where the gaps are and whether
+they're real.
+Here's my product context:
+Domain:[your product space]
+Target persona: [who you're building for]
+Primary job to be done:[the job from Chapter 4]
+What I'm building: [1-2 sentence description]
+Competitors I already know about:
+[list any you've found, or "none yet"]
+Please:
+Identify 3-5 INDIRECT competitors I might not
+have considered — products that partially overlap
+with my user's journey even if they're in a
+different category
+Identify the most likely REAL competition —
+the workarounds and cobbled-together tools my
+user is probably using right now
+For each competitor (direct and indirect), tell
+me: what they do well that I should learn from,
+and where they fail for my specific persona
+Assess the EMPTY ROOM: if nobody is building
+exactly what I'm building, give me 3 possible
+reasons why — and which is most likely
+Search for DEAD competitors in this space and
+hypothesize their cause of death
+Write me a positioning statement using the format:
+"For [persona] who [situation], [product] is
+[category] that[differentiator]. Unlike
+[alternative], we [distinction]. We will NEVER
+[anti-positioning]."
+Be strategic, not encyclopedic. I need insights
+I can act on, not a list I can Google.`}
+note=""
+/>
+
+<ComplexityTax
+concepts="14"
+conceptList={["The Competition Stack", "The Empty Room Paradox", "User Journey Mapping", "Graveyard Tour methodology", "Positioning by exclusion", "The 'Will NEVER' line"]}
+templates="7"
+templateList={["Competitive Landscape Canvas"]}
+questions="0"
+interviews="0"
+summary="Running total: You know the problem, the people, the jobs, and the neighborhood. You still haven't built anything. But now you know EXACTLY what to build — and more importantly, what not to. The guitar is tuned. The setlist is drafted. Time to decide which songs make the cut."
+/>
+
+## Coming Next
+
+You know the problem. You know the people. You know the jobs. You know the competition. You know where the gap is.
+
+Now comes the hardest chapter in the book.
+
+**Next: Chapter 6 — Deciding What to Build.** We'll cover MVP scoping, prioritization frameworks (RICE scoring in practice, not theory), the include/exclude matrix, and the deeply uncomfortable art of saying "not now" to good ideas.
+
+We'll take five jobs, four personas, and a universe of possible features — and cut them down to one persona, one job, one flow, and eight weeks. Most of what you've learned will go on the "not yet" list. That's not waste. That's discipline.
+
+The setlist for your first gig doesn't include every song you know. It includes the three songs you can play flawlessly — because the audience doesn't grade on potential.
+
+<div class="r-fn-wrap">
+<div class="r-fn-title">Footnotes</div>
+<div class="r-fn" id="fn-1"><span class="r-fn-num">1</span><span class="r-fn-text"><strong>Steve Jobs' visit to Xerox PARC</strong> in December 1979 is one of the most analyzed moments in technology history. The common narrative — Jobs "stole" the GUI from Xerox — is an oversimplification. Xerox had the technology but built it into the Xerox Star, a $16,595 workstation aimed at corporate offices. Jobs saw the same technology and imagined it in every home. The technology was the same. The persona was different. That's a competitive strategy lesson worth more than most MBA courses.</span></div>
+<div class="r-fn" id="fn-2"><span class="r-fn-num">2</span><span class="r-fn-text"><strong>Sun Tzu</strong>, <em>The Art of War</em> (5th century BC). Every business book published since approximately 1985 has quoted Sun Tzu, which has somewhat diluted the impact. But the core insight — that understanding your competitive environment is a prerequisite to effective strategy — remains as true for product development as it was for military campaigns. Know your user (yourself) and your competition (the enemy). Everything else follows.</span></div>
+<div class="r-fn" id="fn-3"><span class="r-fn-num">3</span><span class="r-fn-text"><strong>Clayton Christensen's</strong> concept of disruptive innovation is precisely about competitors that don't look like competitors. Netflix didn't look like a competitor to Blockbuster — it was a mail-order DVD service, not a video store. The iPhone didn't look like a competitor to Nokia — it was a media device that happened to make calls. The threat always comes from the direction you're not watching. In the family health space, the biggest threat isn't another health app. It's WhatsApp adding a "health" folder feature.</span></div>
+<div class="r-fn" id="fn-4"><span class="r-fn-num">4</span><span class="r-fn-text"><strong>Ben Thompson</strong> writes Stratechery, one of the best technology strategy publications. His concept of "aggregation theory" is relevant here: platforms that aggregate user attention (WhatsApp, Google) have structural advantages over vertical products (your health app). This means you must either integrate with the aggregators or offer something so specific and valuable that users will tolerate leaving the aggregator to use you. For a health visit briefing that reduces anxiety from 10 to 3, they will.</span></div>
+<div class="r-fn" id="fn-5"><span class="r-fn-num">5</span><span class="r-fn-text"><strong>Oscar Wilde</strong>, <em>Lady Windermere's Fan</em> (1892). Wilde, who was famously extravagant in both his prose and his life, would have been a terrible product manager but an excellent user researcher — he had an uncanny ability to observe human behavior and describe it in ways that were simultaneously funny and devastatingly precise. His observation about experience and mistakes applies with particular force to the study of dead competitors: their mistakes are your education, and the tuition has already been paid.</span></div>
+<div class="r-fn" id="fn-6"><span class="r-fn-num">6</span><span class="r-fn-text"><strong>The "Will NEVER" line</strong> deserves special attention. In a typical product org, features accumulate through a thousand small compromises: "just this once," "users are asking for it," "it's technically easy." The "Will NEVER" line in your positioning statement is a firewall against this drift. When someone suggests adding symptom interpretation because "users want it and the AI can do it," the answer is in the positioning: <em>we will NEVER diagnose or interpret symptoms.</em> Not "we don't currently." Not "it's on the roadmap." NEVER. This is how you maintain product discipline over years, not just sprints.</span></div>
+<div class="r-fn" id="fn-7"><span class="r-fn-num">7</span><span class="r-fn-text"><strong>Al Ries and Jack Trout</strong>, <em>Positioning: The Battle for Your Mind</em> (1981). This book essentially created the modern concept of product positioning. Their core argument — that positioning happens in the customer's mind, not in the product itself — explains why two nearly identical products can occupy completely different market positions. It's also why competitive analysis must start with the user's perception, not the feature list. Your user doesn't compare feature matrices. They compare feelings.</span></div>
+</div>

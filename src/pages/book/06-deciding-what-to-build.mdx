@@ -1,0 +1,542 @@
+---
+layout: ../../layouts/ChapterLayout.astro
+title: "Deciding What to Build"
+chapterNum: 6
+subtitle: "The art of saying \"not now\" to good ideas."
+prevChapter: { num: 5, title: "Know Your Neighborhood", slug: "05-know-your-neighborhood" }
+nextChapter: { num: 7, title: "Making It Real on Paper", slug: "07-making-it-real-on-paper" }
+---
+
+import QuoteBlock from '../../components/QuoteBlock.astro';
+import ExerciseCard from '../../components/ExerciseCard.astro';
+import ComplexityTax from '../../components/ComplexityTax.astro';
+import TheMVPRazor from '../../components/animations/TheMVPRazor.jsx';
+
+There is a moment in every product's life when everything feels possible.
+
+You have your research. You have your personas. You have five vivid, emotionally resonant jobs to be done. You have a competitive gap nobody else is filling. You have an LLM that can generate working code in minutes and a design tool that can mock up screens in hours. The universe is open. The roadmap is a blank canvas. You could build *anything*.
+
+This is the most dangerous moment in product development.
+
+Because you are about to mistake "everything is possible" for "everything should be built." And if you don't have a framework for deciding what makes the cut — a framework with teeth, not just good intentions — you will build too much, too broadly, for too many people, and ship a product that does twelve things at a C+ level instead of one thing at an A.
+
+This chapter is about the cut. It is the hardest chapter in the book, not because the concepts are complex, but because every cut hurts. You will exclude features that users explicitly asked for. You will defer jobs that are genuinely painful. You will look at your beautifully comprehensive research and put 80% of it on a shelf labeled "later."
+
+That shelf is not failure. That shelf is discipline. And discipline is the only thing that separates products that ship from products that sprawl.
+
+<QuoteBlock quote="I didn't have time to write a short letter, so I wrote a long one instead." attribution="Mark Twain (attributed)" footnote="1" />
+
+## What "MVP" Actually Means (And What It Doesn't)
+
+The term "Minimum Viable Product" has been so thoroughly abused that it now means almost nothing. Let's restore it.
+
+An MVP is not a half-built product. It is not version 0.5 of your vision. It is not the crappy version you ship because you ran out of time. And it is absolutely not a prototype with a login screen bolted on.
+
+An MVP is **the smallest thing you can build that lets you test whether your core hypothesis is true.**
+
+That definition has three load-bearing words:
+
+**Smallest.** Not "reasonably small." Not "pretty small considering the scope." The *smallest*. Every feature in the MVP must pass a brutal test: "If I remove this, can I still test the hypothesis?" If the answer is yes, remove it.
+
+**Test.** The MVP exists to learn, not to impress. It doesn't need to be beautiful. It doesn't need to be complete. It needs to generate data that either confirms or kills your hypothesis. If it can't do that, it's not an MVP. It's a demo.
+
+**Core hypothesis.** You have one. You wrote it in Chapter 2. It looks something like: "We believe[person] will [behavior] because [pain]." The MVP tests *that specific claim*, not your entire vision.
+
+<QuoteBlock quote="An MVP is not the product with the minimum number of features. It is the simplest product that lets you start the build-measure-learn loop." attribution="Eric Ries" footnote="2" />
+
+Here's the family health app's MVP hypothesis, from our earlier work:
+
+```text
+We believe that Primary Household Care Managers
+(Sandeep) will complete 2+ doctor visit cycles
+per month using AI-powered visit preparation
+and post-visit task extraction,
+
+because manual preparation is exhausting and
+follow-through falls through the cracks.
+
+We will know this is true when 50%+ of beta users
+complete 2+ visit cycles in their first month.
+
+We will know this is FALSE when fewer than 50%
+complete even one full visit cycle.
+```
+
+Every feature in the MVP exists to test this hypothesis. If a feature doesn't serve the hypothesis, it doesn't belong in the MVP — no matter how good it is, how much users want it, or how easy it would be to add.
+
+<TheMVPRazor client:visible />
+
+## The Include/Exclude Matrix
+
+Here is the single most useful artifact in MVP scoping. It's not a prioritization framework. It's not a feature list. It's a public, unambiguous declaration of what's in and what's out — and why.
+
+The power of the include/exclude matrix is not in what it includes. It's in what it excludes. Every "exclude" entry is a future argument you've already won. When someone says "but what about medication reminders?" you point to the matrix: "Excluded. V2. Different JTBD. Scope creep risk." Conversation over.
+
+Here's the one from the family health app:
+
+```text
+INCLUDE / EXCLUDE MATRIX
+=========================
+
+INCLUDE (MVP)                    RATIONALE
+-----------------------------------------------------------
+Family member profile            Foundation for everything
+  (1 member, basic health data)  else. Minimal fields.
+
+AI pre-visit interview           Core of the hypothesis.
+  (conversational, 4 rounds)     This IS the product.
+
+Visit briefing generation        The deliverable Sandeep
+  (1-page, PDF export)           takes to the doctor.
+
+Prescription photo capture       Post-visit entry point.
+  (camera + OCR extraction)      Reduces data entry.
+
+Post-visit task extraction       Completes the cycle.
+  (tests, meds, follow-ups)      Without this, no loop.
+
+Task tracker                     Closes the behavior loop.
+  (status, due dates, alerts)    Makes completion visible.
+
+AI guardrails + disclaimers      Non-negotiable. Trust
+  (hardcoded, every AI output)   is the product.
+
+
+EXCLUDE (NOT MVP)                RATIONALE          WHEN
+-----------------------------------------------------------
+Doctor discovery/ratings         Different JTBD     V2
+                                 (J4). Needs
+                                 partnerships.
+
+Multi-sibling coordination       Triples build      V3
+                                 complexity.
+                                 Test single-user
+                                 value first.
+
+ABHA / health record             Regulatory         V2
+  integration                    complexity.
+
+Medication reminders             Different JTBD     V2
+                                 (J3). Daily
+                                 mode vs episodic.
+
+Chat between family members      WhatsApp already   Never
+                                 does this. Do not
+                                 compete.
+
+Symptom checker / diagnosis      Violates core      NEVER
+                                 guardrail.
+                                 NEVER. EVER.
+
+Appointment booking              Out of scope.      V2
+                                 Practo does this.
+
+Health analytics dashboard       Sandeep does not   V3
+                                 want a dashboard.
+                                 Chapter 1 lesson.
+```
+
+Notice the "NEVER" entries. Those aren't deferrals. They're principles. Symptom checking will never enter this product, regardless of what users request, what competitors build, or what the AI is capable of. That's not a product decision. It's a guardrail. And guardrails don't have version numbers.
+
+## RICE Scoring (In Practice, Not Theory)
+
+Every product book mentions RICE. Almost none of them show you what it actually looks like when you use it on real decisions with real trade-offs and real emotional attachment to the features you're scoring.
+
+RICE stands for Reach x Impact x Confidence / Effort. The formula is simple. The hard part is being honest.
+
+Reach: How many users will this feature affect per time period? Not "how many users could theoretically benefit" — how many will actually encounter this feature in their normal usage during the first month?
+
+Impact: How much will this feature move the needle on your core metric? Score it: 3 = massive, 2 = high, 1 = medium, 0.5 = low, 0.25 = minimal.
+
+Confidence: How sure are you about the above estimates? 100% = high (you have data), 80% = medium (you have strong intuition from research), 50% = low (it's a guess). This is where most people cheat. They give everything 80% because admitting 50% feels like weakness. Don't cheat. The confidence score exists precisely to discount your overconfidence.
+
+Effort: How many person-weeks will this take? Be honest. Then add 50%, because you're wrong and you know it.
+
+Here's how RICE played out for the health app's feature decisions:
+
+```text
+RICE SCORING: FAMILY HEALTH MVP FEATURES
+=========================================
+
+Feature              Reach  Impact  Conf  Effort  SCORE
+---------------------------------------------------------
+AI visit briefing     100%   3      90%    3wk     90
+  (The core product. Every user, every visit.)
+
+Post-visit task       100%   2      80%    2wk     80
+  extraction
+  (Completes the cycle. High confidence from research.)
+
+Prescription OCR      80%    2      60%    3wk     32
+  (Most users, but handwriting OCR is risky.)
+
+Pre-visit interview   100%   3      80%    2wk    120
+  (Conversational AI prep. Highest value per effort.)
+
+Task tracker          90%    1.5    80%    1.5wk   72
+  (Needed to close the loop. Low complexity.)
+
+Family member         100%   1      100%   1wk    100
+  profile (basic)
+  (Foundation. No product without it.)
+
+----- BELOW THE LINE -----
+
+Medication reminders  60%    1      50%    2wk     15
+  (Different job. Lower confidence. Defer.)
+
+Doctor discovery      40%    2      30%    6wk      4
+  (Massive effort, low confidence. Hard no.)
+
+Multi-user sharing    30%    1.5    40%    5wk      4
+  (Low reach for MVP beta. V3.)
+
+Health dashboard      50%    0.5    30%    3wk      3
+  (Nobody asked for this. The Mirror Problem.)
+```
+
+The line between "build" and "defer" becomes visible. Features above the line share a pattern: high reach, strong research confidence, and reasonable effort. Features below the line have at least one fatal weakness — usually low confidence (we're guessing) or high effort (scope bomb).
+
+<QuoteBlock quote="The essence of strategy is choosing what not to do." attribution="Michael Porter" footnote="3" />
+
+## The One-Flow Rule
+
+Here's a scoping principle that sounds extreme and is actually liberating: your MVP should have one primary flow, end-to-end.
+
+Not three flows. Not five screens that each do something different. One flow, from trigger to completion, that represents the core behavior loop you're testing.
+
+For the family health app, the one flow is the visit cycle:
+
+```text
+THE ONE FLOW: DOCTOR VISIT CYCLE
+==================================
+
+TRIGGER:
+  Sandeep has a doctor appointment coming up
+  for his father.
+
+STEP 1: Prep for Visit
+  Sandeep taps "Prep for Visit" on his
+  father's profile.
+
+STEP 2: AI Interview
+  App asks 4 rounds of questions about
+  recent health, medications, symptoms,
+  concerns. Takes ~2 minutes.
+
+STEP 3: Briefing Generated
+  AI produces a 1-page briefing: medical
+  history summary, questions to ask the
+  doctor, things to bring. Sandeep can
+  edit and export as PDF.
+
+STEP 4: At the Doctor
+  Sandeep uses the briefing. Shows the
+  PDF or reads from the app.
+
+STEP 5: Post-Visit Capture
+  Sandeep photographs the prescription.
+  OCR + AI extracts medicines, tests,
+  follow-up dates.
+
+STEP 6: Task Tracker
+  Extracted tasks appear as a checklist.
+  Due dates set. Reminders triggered.
+
+STEP 7: Cycle Complete
+  Tasks get done. Data accumulates.
+  Next visit, the briefing is richer
+  because the system knows more.
+
+NORTH STAR MOMENT:
+  Sandeep walks into the doctor's office
+  feeling prepared instead of panicked.
+  He walks out with a plan instead of
+  a crumpled prescription and a prayer.
+```
+
+Everything in the MVP serves this flow. The family member profile exists so the AI can generate a relevant briefing. The AI interview exists to gather current context. The briefing exists to reduce visit anxiety. The OCR exists to lower the barrier for post-visit capture. The task tracker exists to close the loop.
+
+If a feature doesn't appear in this flow, it doesn't appear in the MVP.
+
+
+## Time-Boxing: The MVP's Best Friend
+
+An MVP without a deadline is not an MVP. It's a project. Projects expand to fill available time. MVPs ship or die.
+
+The family health app has an 8-week timebox:
+
+| Week | Milestone | Gate Criteria |
+| --- | --- | --- |
+| 1-2 | Design freeze | Team sign-off on user flows and design system |
+| 3-5 | Alpha build | Core flow working. Dogfooding complete. |
+| 6 | Beta launch | 15 users onboarded |
+| 7-8 | PMF decision | Metrics hit OR pivot |
+
+The gate criteria are non-negotiable. If design isn't frozen by end of week 2, something is wrong — either the scope is too large or the decisions aren't being made. If you can't onboard 15 beta users by week 6, you have a distribution problem that no amount of additional development will solve.
+
+<QuoteBlock quote="Work expands so as to fill the time available for its completion." attribution="Cyril Northcote Parkinson" footnote="4" />
+
+Parkinson's Law is the silent killer of MVPs. Without a timebox, week 3 becomes "just one more feature" week. Week 5 becomes "let's polish the onboarding" week. Week 8 becomes "we're almost ready" week. Week 12, you're still building and you've never shown it to a user.
+
+Eight weeks. Ship or learn why you can't. Both outcomes are valuable. Twelve weeks of building in silence is not.
+
+```text
+THE TIMEBOX TEST
+=================
+
+If your MVP takes longer than 8 weeks, one of
+these things is true:
+
+1. Your scope is too large.
+   -> Cut features until it fits.
+
+2. Your team is too small.
+   -> Cut features until it fits.
+
+3. Your technology is too uncertain.
+   -> Cut the uncertain parts and use
+      manual fallbacks.
+
+4. You're not actually building an MVP.
+   -> You're building V1. That's fine,
+      but call it what it is and adjust
+      your expectations accordingly.
+
+The answer to all four is the same:
+cut until it fits.
+```
+
+## The Feature Graveyard (Saying No With Grace)
+
+Every feature you exclude needs a burial — not a quiet disappearance, but a documented decision with a rationale. This matters for three reasons:
+
+First, it prevents re-litigation. Without documentation, excluded features will be proposed again in week 4, week 6, and week 8. Each time, the team will have the same argument from scratch. A documented exclusion with a clear rationale turns a 30-minute debate into a 30-second reference.
+
+Second, it respects the idea. Most excluded features are genuinely good ideas. Medication reminders would help Sandeep. Doctor discovery would help everyone. Multi-sibling coordination addresses a real pain point. These aren't bad ideas. They're good ideas at the wrong time. Documenting them in a "V2 candidates" list honors the research that surfaced them.
+
+Third, it builds your roadmap. The exclude list is your roadmap. When the MVP ships and the hypothesis is validated (or invalidated), the exclude list tells you where to go next. You don't need a separate "roadmap planning session." You need to look at the graveyard and decide which features to resurrect.
+
+```text
+THE FEATURE GRAVEYARD
+======================
+
+Every excluded feature gets a headstone:
+
+FEATURE: [Name]
+BORN: [When it was first proposed]
+DIED:[When it was excluded]
+CAUSE OF DEATH: [Why it was cut]
+EULOGY:[What it would have done, and for whom]
+RESURRECTION DATE: [V2 / V3 / Never]
+LAST WORDS:[The strongest argument FOR including
+             it — so future-you remembers why
+             someone cared about this]
+
+This sounds morbid. It's actually kind.
+These features deserve better than being
+quietly forgotten. They deserve to be
+remembered, properly mourned, and potentially
+brought back when the time is right.
+```
+
+<QuoteBlock quote="For every complex problem there is an answer that is clear, simple, and wrong." attribution="H.L. Mencken" footnote="5" />
+
+The clear, simple, wrong answer to every scoping discussion is "let's just add it." It's easy. It feels generous. And it kills products with the slow poison of complexity.
+
+## The Scope Creep Immune System
+
+Scope creep doesn't arrive as a dramatic invasion. It arrives as a series of reasonable, well-intentioned suggestions that each add "just a little" work. No single suggestion seems harmful. But compounded over weeks, they transform your focused MVP into a sprawling mess.<a class="fn-ref" href="#fn-6">6</a>
+
+You need an immune system — a set of automatic responses that activate whenever scope expansion is proposed.
+
+### Response 1: "Does this test the hypothesis?"
+
+If the answer is no, the conversation is over. The feature might be wonderful. It doesn't test the hypothesis. It's V2.
+
+### Response 2: "What do we remove to make room?"
+
+Every addition requires a subtraction. If someone wants to add medication reminders, they must identify what gets cut to make the timeline work. This reframes addition as trade-off, which is what it actually is.
+
+### Response 3: "Can we simulate it manually?"
+
+Many features can be tested with manual processes before being built. Want to test whether users value medication reminders? Send them a WhatsApp message at pill time for a week. If they love it, build it in V2. If they ignore it, you saved two weeks of development.
+
+### Response 4: "Log it."
+
+Every scope request gets logged in a dedicated document — not dismissed, not argued, not built. Logged. With the requester's name, the rationale, and the user need it addresses. This document becomes your V2 planning input and your evidence of disciplined decision-making.
+
+
+## Template: The MVP Scope Document
+
+This is the artifact that holds the line. One page. Print it. Tape it next to the Pre-Flight Checklist from Chapter 1.
+
+```text
+MVP SCOPE DOCUMENT
+===================
+
+DATE: ________  VERSION: ____
+
+MISSION STATEMENT (1 sentence):
+We will build [X] to solve [Y] for [Z]
+so we learn [W] in [T timeframe].
+
+Example: "We will build doctor visit prep
+to solve the visit cycle job for Sandeep
+so we learn if he adopts automated briefings
+in 8 weeks."
+___________________________________________
+
+HYPOTHESIS:
+We believe [who] will [behavior]
+because [pain].
+True when: ________________________________
+FALSE when: _______________________________
+
+PRIMARY PERSONA: __________________________
+PRIMARY JTBD: _____________________________
+
+CORE FLOW (the one flow, end-to-end):
+Step 1: ___________________________________
+Step 2: ___________________________________
+Step 3: ___________________________________
+Step 4: ___________________________________
+Step 5: ___________________________________
+North Star Moment: ________________________
+
+INCLUDE (features that test the hypothesis):
+1. _________________ Rationale: ___________
+2. _________________ Rationale: ___________
+3. _________________ Rationale: ___________
+4. _________________ Rationale: ___________
+5. _________________ Rationale: ___________
+
+EXCLUDE (features deferred or killed):
+1. _________________ When: ____ Why: ______
+2. _________________ When: ____ Why: ______
+3. _________________ When: ____ Why: ______
+4. _________________ When: ____ Why: ______
+
+NEVER (guardrails, not features):
+1. _________________ Why: ________________
+2. _________________ Why: ________________
+
+TIMEBOX: ____ weeks
+Gate 1 (design freeze): Week ____
+Gate 2 (alpha):         Week ____
+Gate 3 (beta launch):   Week ____
+Gate 4 (PMF decision):  Week ____
+
+SUCCESS METRICS (3 max):
+1. _________________ Target: ____ Kill: ____
+2. _________________ Target: ____ Kill: ____
+3. _________________ Target: ____ Kill: ____
+
+RISKS (top 3):
+1. _________________ Mitigation: __________
+2. _________________ Mitigation: __________
+3. _________________ Mitigation: __________
+```
+
+## Template: The RICE Scoring Sheet
+
+Use this when you have 10+ feature candidates and need to make defensible prioritization decisions.
+
+```text
+RICE SCORING SHEET
+===================
+
+Feature: ___________________________________
+
+REACH: What % of users encounter this per month?
+  ____%
+  Evidence: ________________________________
+
+IMPACT: How much does it move the core metric?
+  [ ] 3 - Massive   [ ] 2 - High
+  [ ] 1 - Medium    [ ] 0.5 - Low
+  Evidence: ________________________________
+
+CONFIDENCE: How sure are you?
+  [ ] 100% - Data supports this
+  [ ] 80%  - Strong intuition from research
+  [ ] 50%  - Educated guess
+  [ ] 20%  - Pure speculation
+  Be honest. This is where most people cheat.
+
+EFFORT: Person-weeks to build?
+  ____ weeks (then add 50%: ____ adjusted)
+
+SCORE: Reach x Impact x Confidence / Effort
+  = ____
+
+ABOVE THE LINE? [ ] Yes  [ ] No
+If No, when: [ ] V2  [ ] V3  [ ] Never
+```
+
+<ExerciseCard
+title="Scope Your MVP"
+prompt={`PROMPT FOR CLAUDE:
+I need help scoping my MVP. I have too many ideas
+and I need to cut ruthlessly. Be my scope enforcer
+— the person who says "not now" so I don't have to.
+Here's my context:
+Product:[what you're building]
+Primary persona: [from Chapter 4]
+Primary JTBD: [from Chapter 4]
+Hypothesis: [from Chapter 2]
+Timebox: [how many weeks]
+Features I'm considering:
+[list all features, even the ones you suspect
+should be cut]
+Please:
+Score each feature using RICE and show your
+work — be brutally honest about confidence
+Draw the line: which features go in the MVP
+and which get deferred?
+For each excluded feature, write a one-line
+"eulogy" explaining why it was cut and when
+it might return
+Identify the ONE FLOW — the single end-to-end
+path that tests my hypothesis
+Flag any features I listed that might actually
+be guardrails (things the product should NEVER
+do) rather than features to defer
+Stress-test my timebox: given what's in scope,
+is the timeline realistic? If not, what gets
+cut to make it fit?
+I'd rather ship something small that teaches me
+something real than build something comprehensive
+that never sees a user.`}
+note=""
+/>
+
+<ComplexityTax
+concepts="18"
+conceptList={["MVP definition", "Include/Exclude Matrix", "RICE Scoring", "The One-Flow Rule", "Time-boxing with gate criteria", "The Feature Graveyard", "Scope Creep Immune System"]}
+templates="9"
+templateList={["MVP Scope Document", "RICE Scoring Sheet"]}
+questions="0"
+interviews="0"
+summary="Running total: You now have a scope document with a mission, a hypothesis, one persona, one job, one flow, explicit exclusions, gate criteria, success metrics, and kill criteria. You are ready to make it real. On paper, first. Then in code."
+/>
+
+## Coming Next
+
+You have a scope. You have a flow. You have six features and eight weeks.
+
+Now you need to see it. Not in your head — on paper, on screen, in front of a human being who can tell you whether it makes sense before you write a line of code.
+
+Next: Chapter 7 — Making It Real on Paper. We will cover design systems, style guides, static prototypes, user flows, and the deeply underrated practice of testing your product before it exists. We will build "The Calm Companion" — a design language engineered for anxious caregivers in hospital waiting rooms — and learn why the color of a button matters more than most engineers think.
+
+The setlist is final. Time for sound check.
+
+<div class="r-fn-wrap">
+<div class="r-fn-title">Footnotes</div>
+<div class="r-fn" id="fn-1"><span class="r-fn-num">1</span><span class="r-fn-text"><strong>Mark Twain</strong> probably said some version of this, though the quote has been attributed to Blaise Pascal, John Locke, Benjamin Franklin, and approximately everyone else who has ever struggled with brevity. The point stands regardless of authorship: cutting is harder than adding. A 20-feature product is easy to design. A 6-feature product that does the same job requires actual thought.</span></div>
+<div class="r-fn" id="fn-2"><span class="r-fn-num">2</span><span class="r-fn-text"><strong>Eric Ries</strong>, author of <em>The Lean Startup</em> (2011), popularized the MVP concept and the Build-Measure-Learn loop. His contribution was making "learning" a legitimate product outcome. Before Ries, shipping something small felt like failure. After Ries, it felt like methodology. The distinction matters because it gives teams permission to ship imperfect things — which is the only way to learn what "perfect" actually looks like for your users.</span></div>
+<div class="r-fn" id="fn-3"><span class="r-fn-num">3</span><span class="r-fn-text"><strong>Michael Porter</strong> appears again (see Chapter 4, footnote 6). His argument about strategy as choosing what NOT to do is the intellectual foundation for the include/exclude matrix. Most builders find it easy to list what they want to build. Porter's contribution was explaining why the exclude list is the harder and more important document.</span></div>
+<div class="r-fn" id="fn-4"><span class="r-fn-num">4</span><span class="r-fn-text"><strong>Cyril Northcote Parkinson</strong> first articulated his law in a humorous essay for The Economist in 1955. He was writing about bureaucracy in the British Civil Service, but the principle applies with terrifying precision to software development. Without a timebox, every task expands. A login screen that should take a day takes a week because someone decides to add social login, password recovery, and biometric authentication. The timebox says: "You have one week for the entire auth flow. Make decisions."</span></div>
+<div class="r-fn" id="fn-5"><span class="r-fn-num">5</span><span class="r-fn-text"><strong>H.L. Mencken</strong>, <em>Prejudices: Second Series</em> (1920). Mencken was a journalist and satirist who distrusted simple answers to complex questions. In product terms: the simple answer to "what should we build?" is "everything the user wants." The correct answer is "the smallest thing that tests whether they want it enough to change their behavior." The first answer is clear, simple, and wrong. The second is messy, painful, and right.</span></div>
+<div class="r-fn" id="fn-6"><span class="r-fn-num">6</span><span class="r-fn-text"><strong>The "just one more feature" trap</strong> deserves its own footnote because it is the single most common cause of MVP failure. It works like this: every stakeholder adds one small thing. The PM adds "just" a settings page. The designer adds "just" an onboarding tutorial. The engineer adds "just" offline support. Each addition is small. Each is reasonable. Together, they add six weeks to the timeline and transform a focused experiment into a bloated V1 that nobody has the courage to ship because it's "almost ready" — and "almost ready" is the most expensive state a product can inhabit.</span></div>
+</div>

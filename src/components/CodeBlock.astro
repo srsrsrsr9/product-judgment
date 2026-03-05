@@ -1,0 +1,12 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="r-code">
+  {title && <div style="font-family: var(--mono); font-size: 0.68rem; color: var(--accent); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;">{title}</div>}
+  <pre><slot /></pre>
+</div>

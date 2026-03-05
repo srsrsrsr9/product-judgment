@@ -1,0 +1,23 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  tags: string[];
+  color: string;
+  icon: string;
+}
+
+const { id, name, tagline, description, tags, color, icon } = Astro.props;
+---
+
+<a class="product-card" href={`/products/${id}/`} style={`--card-accent: ${color}`}>
+  <div class="p-icon">{icon}</div>
+  <div class="p-name">{name}</div>
+  <div class="p-tagline">{tagline}</div>
+  <div class="p-desc">{description}</div>
+  <div class="p-tags">
+    {tags.map((t) => <span class="p-tag">{t}</span>)}
+  </div>
+</a>

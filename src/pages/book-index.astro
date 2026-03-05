@@ -1,0 +1,59 @@
+---
+import BookBaseLayout from '../layouts/BookBaseLayout.astro';
+import { CHAPTERS } from '../data/chapters';
+---
+
+<BookBaseLayout title="Intelligence Is Cheap. Product Judgment Isn't.">
+  <div class="page-enter">
+    <div class="section">
+      <div class="book-hero">
+        <h1 class="book-hero-title">Intelligence Is Cheap.<br/>Product Judgment Isn't.</h1>
+        <p class="book-hero-subtitle">A PM's Guide to Building in the Age of AI</p>
+        <p class="book-hero-byline">by Srinivas Vedantam</p>
+      </div>
+      <div class="book-intro">
+        <p>A practical guide for builders who can ship code but need a system for deciding <em>what</em> to build and <em>why</em>. Ten chapters that bridge the gap between having AI superpowers and building something people actually need.</p>
+      </div>
+      <div class="chapter-list">
+        {CHAPTERS.map((ch) => (
+          <a class="chapter-item" href={`${import.meta.env.BASE_URL}book/${ch.slug}/`}>
+            <div class="ch-num">{String(ch.num).padStart(2, '0')}</div>
+            <div>
+              <div class="ch-title">{ch.title}</div>
+              <div class="ch-sub">{ch.subtitle}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BookBaseLayout>
+
+<style>
+  .book-hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+  }
+
+  .book-hero-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--text);
+    line-height: 1.2;
+    margin: 0 0 1rem;
+  }
+
+  .book-hero-subtitle {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .book-hero-byline {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+</style>

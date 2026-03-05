@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string;
+  prompt: string;
+  note?: string;
+}
+
+const { title, prompt, note } = Astro.props;
+---
+
+<div class="r-ex">
+  <div class="r-ex-hd">
+    <span class="r-ex-badge">Interactive</span>
+    <span class="r-ex-label">{title}</span>
+  </div>
+  <div class="r-ex-body">
+    <div class="r-ex-prompt" set:html={prompt} />
+    {note && (
+      <div class="r-ex-note" set:html={note} />
+    )}
+  </div>
+</div>

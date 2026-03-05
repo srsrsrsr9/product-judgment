@@ -1,0 +1,49 @@
+---
+import BookBaseLayout from './BookBaseLayout.astro';
+import ChapterRoadmap from '../components/ChapterRoadmap.astro';
+
+interface Props {
+  title: string;
+  chapterNum: number;
+  subtitle: string;
+  prevChapter?: { num: number; title: string; slug: string };
+  nextChapter?: { num: number; title: string; slug: string };
+}
+
+const { frontmatter } = Astro.props;
+const { title, chapterNum, subtitle, prevChapter, nextChapter } = frontmatter;
+const chNumStr = String(chapterNum).padStart(2, '0');
+---
+
+<BookBaseLayout title={`Ch ${chNumStr}: ${title}`} activePage="book">
+  <div class="page-enter">
+    <div class="reader-wrap">
+      <a class="reader-back" href={`${import.meta.env.BASE_URL}book/`}>&larr; Back to chapters</a>
+      <div class="reader-chnum">Chapter {chNumStr}</div>
+      <h1 class="reader-title">{title}</h1>
+      <div class="reader-subtitle">{subtitle}</div>
+      <hr class="reader-rule" />
+
+      <div class="mdx-content">
+        <slot />
+      </div>
+
+      <ChapterRoadmap currentChapter={chapterNum} />
+
+      <div class="r-cnav">
+        {prevChapter ? (
+          <a class="r-cnav-btn" href={`${import.meta.env.BASE_URL}book/${prevChapter.slug}/`}>
+            <div class="r-cnav-dir">&larr; Previous Chapter</div>
+            <div class="r-cnav-title">{prevChapter.title}</div>
+          </a>
+        ) : <div />}
+        {nextChapter ? (
+          <a class="r-cnav-btn" href={`${import.meta.env.BASE_URL}book/${nextChapter.slug}/`}>
+            <div class="r-cnav-dir">Next Chapter &rarr;</div>
+            <div class="r-cnav-title">{nextChapter.title}</div>
+          </a>
+        ) : <div />}
+      </div>
+    </div>
+  </div>
+</BookBaseLayout>

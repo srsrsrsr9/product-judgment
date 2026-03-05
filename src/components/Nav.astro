@@ -1,0 +1,31 @@
+---
+interface Props {
+  activePage?: string;
+}
+
+const { activePage = "home" } = Astro.props;
+
+const links = [
+  { id: "home", label: "Home", href: "/" },
+  { id: "book", label: "Book", href: "/book/" },
+  { id: "products", label: "Products", href: "/products/" },
+  { id: "fastchain", label: "Fastchain", href: "/fastchain/" },
+  { id: "about", label: "About", href: "/about/" },
+];
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">Srinivas<span>Vedantam</span></a>
+    <div class="nav-links">
+      {links.map((l) => (
+        <a
+          class={`nav-link ${activePage === l.id ? "active" : ""}`}
+          href={l.href}
+        >
+          {l.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>

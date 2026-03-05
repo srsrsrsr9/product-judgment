@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { PRODUCTS } from '../../data/chapters';
+const p = PRODUCTS.find(x => x.id === 'lms')!;
+---
+
+<BaseLayout title={`${p.name} — Products`} activePage="products">
+  <div class="page-enter">
+    <div class="section">
+      <a class="back-link" href="/products/">&larr; Back to Products</a>
+      <div class="d-detail">
+        <div class="d-icon">{p.icon}</div>
+        <h2 class="d-title">{p.name}</h2>
+        <div class="d-tagline">{p.tagline}</div>
+        <div class="d-desc">{p.description}</div>
+        <div class="d-stitle">Key Capabilities</div>
+        <div class="hl-list">
+          {p.highlights.map((h) => (
+            <div class="hl-item">
+              <div class="hl-dot" style={`background: ${p.color}`} />
+              {h}
+            </div>
+          ))}
+        </div>
+        <div class="d-stitle">Stack</div>
+        <div class="p-tags" style="margin-bottom: 2rem;">
+          {p.tags.map((t) => <span class="p-tag">{t}</span>)}
+        </div>
+        <div class="d-ph"><div class="d-ph-t">Screenshots & Architecture</div>Add product screenshots, architecture diagrams, and a Loom walkthrough here.</div>
+        <div class="d-ph" style="margin-top: 1rem;"><div class="d-ph-t">PM Decisions & Tradeoffs</div>Document the key product decisions, scope tradeoffs, and lessons learned here.</div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

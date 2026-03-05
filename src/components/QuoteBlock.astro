@@ -1,0 +1,17 @@
+---
+interface Props {
+  quote: string;
+  attribution: string;
+  footnote?: string;
+}
+
+const { quote, attribution, footnote } = Astro.props;
+---
+
+<div class="r-quote">
+  <div class="r-quote-text">&ldquo;{quote}&rdquo;</div>
+  <div class="r-quote-attr">
+    &mdash; {attribution}
+    {footnote && <a class="fn-ref" href={`#fn-${footnote}`}>{footnote}</a>}
+  </div>
+</div>
