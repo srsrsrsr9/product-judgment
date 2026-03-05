@@ -7,6 +7,7 @@ import { CHAPTERS } from '../data/chapters';
   <div class="page-enter">
     <div class="section">
       <div class="book-hero">
+        <img src={`${import.meta.env.BASE_URL}images/srinivas.jpg`} alt="Srinivas Vedantam" class="book-hero-photo" />
         <h1 class="book-hero-title">Intelligence Is Cheap.<br/>Product Judgment Isn't.</h1>
         <p class="book-hero-subtitle">A PM's Guide to Building in the Age of AI</p>
         <p class="book-hero-byline">by Srinivas Vedantam</p>
@@ -33,6 +34,15 @@ import { CHAPTERS } from '../data/chapters';
   .book-hero {
     text-align: center;
     padding: 3rem 0 2rem;
+  }
+
+  .book-hero-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    margin-bottom: 1.5rem;
   }
 
   .book-hero-title {
